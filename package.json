@@ -1,0 +1,19 @@
+{
+  "name": "zssn-api",
+  "version": "1.0.0",
+  "description": "TRZ (The Resident Zombie) - Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nelsonwenner/zssn-api.git"
+  },
+  "author": "Nelson Wenner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nelsonwenner/zssn-api/issues"
+  },
+  "homepage": "https://github.com/nelsonwenner/zssn-api#readme"
+}
