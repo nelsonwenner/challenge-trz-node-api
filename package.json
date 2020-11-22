@@ -4,6 +4,8 @@
   "description": "TRZ (The Resident Zombie) - Backend",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node dist/src/index.js",
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/index.ts",
     "lint:check": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
