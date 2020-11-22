@@ -4,6 +4,7 @@
   "description": "TRZ (The Resident Zombie) - Backend",
   "main": "index.js",
   "scripts": {
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/index.ts",
     "lint:check": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
     "style:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
@@ -19,8 +20,13 @@
     "url": "https://github.com/nelsonwenner/zssn-api/issues"
   },
   "homepage": "https://github.com/nelsonwenner/zssn-api#readme",
+  "dependencies": {
+    "module-alias": "^2.2.2"
+  },
   "devDependencies": {
     "@types/eslint": "^7.2.5",
+    "@types/module-alias": "^2.0.0",
+    "@types/node": "^14.14.9",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
     "eslint": "^7.14.0",
