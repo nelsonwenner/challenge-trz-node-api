@@ -16,3 +16,12 @@ services:
     restart: always
     networks:
       - default
+
+  adminer:
+    container_name: adminer-container
+    image: adminer
+    ports:
+      - 8080:8080
+    restart: always
+    networks:
+      - default
