@@ -1,4 +1,9 @@
-import { getConnectionManager, ConnectionManager, Connection } from 'typeorm';
+import {
+  getConnectionManager,
+  ConnectionManager,
+  Connection,
+  getConnection,
+} from 'typeorm';
 import 'dotenv/config';
 
 const connectionManager: ConnectionManager = getConnectionManager();
@@ -16,5 +21,4 @@ export const connection = async (): Promise<Connection> =>
         : process.env.DB_NAME,
   });
 
-export const close = (connection: Connection): Promise<void> =>
-  connection.close();
+export const close = async (): Promise<void> => getConnection().close();
