@@ -22,6 +22,10 @@ export class Server {
     return this.app;
   }
 
+  public getServer(): http.Server | undefined {
+    return this.server;
+  }
+
   private setupExpress(): void {
     this.app.use(Express.json());
     this.app.use(cors({ origin: '*' }));
