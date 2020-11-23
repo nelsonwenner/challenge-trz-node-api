@@ -2,6 +2,7 @@
   "*.ts": [
     "npm run lint:check",
     "npm run style:fix",
+    "npm run test:coverage",
     "git add ."
   ]
 }
