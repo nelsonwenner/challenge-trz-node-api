@@ -2,12 +2,13 @@ import './utils/module-alias';
 import Express, { Application } from 'express';
 import * as http from 'http';
 import cors from 'cors';
+import 'dotenv/config';
 
 export class Server {
   private readonly app: Application;
   private server?: http.Server;
 
-  constructor(private port = 3333) {
+  constructor(private port = process.env.SERVER_PORT) {
     this.app = Express();
   }
 
