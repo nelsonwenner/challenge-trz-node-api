@@ -14,7 +14,7 @@
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:unit": "npm run test -- -c jest-unitary-config.js",
     "test:coverage": "npm run test -- --coverage",
-    "typeorm:cli": "ts-node-dev ./node_modules/typeorm/cli.js"
+    "typeorm:cli": "ts-node-dev ./node_modules/typeorm/cli.js --config src/config/database/ormconfig.ts"
   },
   "repository": {
     "type": "git",
