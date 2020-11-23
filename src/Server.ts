@@ -1,4 +1,5 @@
 import './utils/module-alias';
+import * as database from '@src/config/database';
 import Express, { Application } from 'express';
 import * as http from 'http';
 import cors from 'cors';
@@ -14,6 +15,11 @@ export class Server {
 
   public async init(): Promise<void> {
     this.setupExpress();
+    await this.setupDatabase();
+  }
+
+  public getApp(): Application {
+    return this.app;
   }
 
   private setupExpress(): void {
@@ -21,11 +27,12 @@ export class Server {
     this.app.use(cors({ origin: '*' }));
   }
 
-  public getApp(): Application {
-    return this.app;
+  private async setupDatabase(): Promise<void> {
+    await database.connect();
   }
 
   public async close(): Promise<void> {
+    await database.close();
     if (this.server) {
       await new Promise((resolve, reject) => {
         this.server?.close((err) => {

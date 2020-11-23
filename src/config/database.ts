@@ -8,7 +8,7 @@ import 'dotenv/config';
 
 const connectionManager: ConnectionManager = getConnectionManager();
 
-export const connection = async (): Promise<Connection> =>
+export const connect = async (): Promise<Connection> =>
   connectionManager.create({
     type: 'postgres',
     host: process.env.DB_HOST,
@@ -21,4 +21,7 @@ export const connection = async (): Promise<Connection> =>
         : process.env.DB_NAME,
   });
 
-export const close = async (): Promise<void> => getConnection().close();
+export const close = async (): Promise<void> => {
+  const connection: Connection = getConnection();
+  connection.close();
+};

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node dist/src/index.js",
-    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/index.ts",
+    "start": "NODE_ENV=production npm run build && node dist/src/index.js",
+    "dev": "NODE_ENV=test ts-node-dev --transpile-only --ignore-watch node_modules src/index.ts",
     "lint:check": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
     "style:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
