@@ -16,7 +16,7 @@ export const connect = async (): Promise<Connection> =>
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     database:
-      process.env.NODE_ENV === 'test'
+      process.env.NODE_ENV === 'development'
         ? process.env.DB_NAME_TEST
         : process.env.DB_NAME,
   });
