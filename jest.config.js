@@ -1,10 +1,7 @@
-const { resolve } = require('path');
-const root = resolve(__dirname);
-
 module.exports = {
-  rootDir: root,
+  rootDir: '.',
   displayName: 'root-tests',
-  collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+  collectCoverageFrom: ['<rootDir>/src/app/**/*.ts'],
   coverageDirectory: 'coverage',
   testEnvironment: 'node',
   clearMocks: true,
