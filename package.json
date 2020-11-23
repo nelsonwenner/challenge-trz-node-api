@@ -10,7 +10,10 @@
     "lint:check": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
     "style:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
-    "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.ts'"
+    "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:unit": "npm test -- -c jest-unitary-config.js",
+    "test:coverage": "npm test -- --coverage"
   },
   "repository": {
     "type": "git",
