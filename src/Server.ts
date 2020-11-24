@@ -9,7 +9,7 @@ export class Server {
   private readonly app: Application;
   private server?: http.Server;
 
-  constructor(private port = process.env.SERVER_PORT) {
+  constructor(private port = process.env.PORT) {
     this.app = Express();
   }
 

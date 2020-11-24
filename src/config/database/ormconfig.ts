@@ -3,7 +3,7 @@ import 'dotenv/config';
 
 const options = {
   type: 'postgres',
-  host: process.env.DB_HOST,
+  host: process.env.DB_URI,
   port: Number(process.env.DB_PORT),
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
