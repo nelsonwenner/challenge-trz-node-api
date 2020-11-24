@@ -1,6 +1,22 @@
 version: "3.7"
 
 services:
+  api:
+    container_name: "api-container"
+    image: node:14.5.0-slim
+    entrypoint: ./.docker/entrypoint.sh
+    working_dir: /home/backend/
+    volumes:
+      - ./:/home/backend/
+    ports: 
+      - "3333:3333"
+    environment:
+      - DB_URI=postgres
+    depends_on: 
+      - postgres
+    networks:
+      - default
+
   postgres:
     container_name: postgres-container
     image: library/postgres:9.6-alpine
@@ -16,7 +32,7 @@ services:
     restart: always
     networks:
       - default
-
+    
   adminer:
     container_name: adminer-container
     image: adminer

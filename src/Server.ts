@@ -1,5 +1,5 @@
 import './utils/module-alias';
-import * as database from '@src/config/database';
+import * as database from '@src/config/database/database';
 import Express, { Application } from 'express';
 import * as http from 'http';
 import cors from 'cors';
@@ -9,7 +9,7 @@ export class Server {
   private readonly app: Application;
   private server?: http.Server;
 
-  constructor(private port = process.env.SERVER_PORT) {
+  constructor(private port = process.env.PORT) {
     this.app = Express();
   }
 
