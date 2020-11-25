@@ -42,4 +42,24 @@ describe('Survivor unitary test', () => {
       error: 'age is a required field',
     });
   });
+
+  test('Should return 400 if sex does not is provided', async () => {
+    const reqFake = {
+      name: name(),
+      age: age(),
+      inventory: [item(1)],
+      location: {
+        latitude: latitude(),
+        longitude: longitude(),
+      },
+    };
+
+    const res = await global.testRequest.post(prefix).send(reqFake);
+
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({
+      code: 400,
+      error: 'sex is a required field',
+    });
+  });
 });
