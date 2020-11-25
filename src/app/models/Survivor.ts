@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
 } from 'typeorm';
+import { LocationEntity } from './Location';
 
 @Entity('survivors')
 export class SurvivorEntity {
@@ -22,6 +24,9 @@ export class SurvivorEntity {
 
   @Column()
   sex!: string;
+
+  @OneToOne(() => LocationEntity, (location) => location.survivor)
+  location!: LocationEntity;
 
   @CreateDateColumn()
   created_at!: Date;
