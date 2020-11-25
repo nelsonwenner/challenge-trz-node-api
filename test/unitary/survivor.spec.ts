@@ -62,4 +62,24 @@ describe('Survivor unitary test', () => {
       error: 'sex is a required field',
     });
   });
+
+  test('Should return 400 if inventory does not is provided', async () => {
+    const reqFake = {
+      name: name(),
+      age: age(),
+      sex: sex(),
+      location: {
+        latitude: latitude(),
+        longitude: longitude(),
+      },
+    };
+
+    const res = await global.testRequest.post(prefix).send(reqFake);
+
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({
+      code: 400,
+      error: 'inventory is a required field',
+    });
+  });
 });
