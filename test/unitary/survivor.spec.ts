@@ -19,7 +19,7 @@ describe('Survivor unitary test', () => {
     expect(res.status).toBe(400);
     expect(res.body).toEqual({
       code: 400,
-      error: 'name is a required field',
+      error: ['name is a required field'],
     });
   });
 
@@ -39,7 +39,7 @@ describe('Survivor unitary test', () => {
     expect(res.status).toBe(400);
     expect(res.body).toEqual({
       code: 400,
-      error: 'age is a required field',
+      error: ['age is a required field'],
     });
   });
 
@@ -59,7 +59,7 @@ describe('Survivor unitary test', () => {
     expect(res.status).toBe(400);
     expect(res.body).toEqual({
       code: 400,
-      error: 'sex is a required field',
+      error: ['sex is a required field'],
     });
   });
 
@@ -79,7 +79,27 @@ describe('Survivor unitary test', () => {
     expect(res.status).toBe(400);
     expect(res.body).toEqual({
       code: 400,
-      error: 'inventory is a required field',
+      error: ['inventory is a required field'],
+    });
+  });
+
+  test('Should return 400 if location does not is provided', async () => {
+    const reqFake = {
+      name: name(),
+      age: age(),
+      sex: sex(),
+      inventory: [item(1)],
+    };
+
+    const res = await global.testRequest.post(prefix).send(reqFake);
+
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({
+      code: 400,
+      error: [
+        'location.latitude is a required field',
+        'location.longitude is a required field',
+      ],
     });
   });
 });

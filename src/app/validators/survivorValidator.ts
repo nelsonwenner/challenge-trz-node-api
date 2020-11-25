@@ -37,7 +37,7 @@ export default async (
   } catch (error) {
     switch (error.message) {
       default:
-        return res.status(400).json({ code: 400, error: error.message });
+        return res.status(400).json({ code: 400, error: error.errors });
     }
   }
 };
