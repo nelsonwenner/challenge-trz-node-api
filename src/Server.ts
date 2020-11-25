@@ -1,6 +1,7 @@
 import './utils/module-alias';
 import * as database from '@src/config/database/database';
 import Express, { Application } from 'express';
+import router from './routes/indexRouter';
 import * as http from 'http';
 import cors from 'cors';
 import 'dotenv/config';
@@ -29,6 +30,7 @@ export class Server {
   private setupExpress(): void {
     this.app.use(Express.json());
     this.app.use(cors({ origin: '*' }));
+    router.forEach((route) => this.app.use(route));
   }
 
   private async setupDatabase(): Promise<void> {
@@ -36,7 +38,7 @@ export class Server {
   }
 
   public async close(): Promise<void> {
-    await database.close();
+    //await database.close();
     if (this.server) {
       await new Promise((resolve, reject) => {
         this.server?.close((err) => {

@@ -3,6 +3,7 @@ module.exports = {
   displayName: 'root-tests',
   collectCoverageFrom: ['<rootDir>/src/app/**/*.ts'],
   coverageDirectory: 'coverage',
+  setupFilesAfterEnv: ["<rootDir>/test/jest-setup.ts"],
   testEnvironment: 'node',
   clearMocks: true,
   preset: 'ts-jest',
