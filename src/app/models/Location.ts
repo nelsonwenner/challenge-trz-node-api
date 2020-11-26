@@ -4,29 +4,25 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
   OneToOne,
 } from 'typeorm';
-import { LocationEntity } from './Location';
+import { SurvivorEntity } from './Survivor';
 
-@Entity('survivors')
-export class SurvivorEntity {
+@Entity('locations')
+export class LocationEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column()
-  name!: string;
+  @OneToOne(() => SurvivorEntity)
+  @JoinColumn()
+  survivor!: SurvivorEntity;
 
   @Column()
-  infected!: boolean;
+  latitude!: number;
 
   @Column()
-  age!: number;
-
-  @Column()
-  sex!: string;
-
-  @OneToOne(() => LocationEntity, (location) => location.survivor)
-  location!: LocationEntity;
+  longitude!: number;
 
   @CreateDateColumn()
   created_at!: Date;
