@@ -1,18 +1,23 @@
-import express, { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { ErrorRequestHandler } from 'express';
 import { ValidationError } from 'yup';
+import AppError from './AppError';
 
 const errorHandler: ErrorRequestHandler = (
-  error: Error,
+  err: Error,
   req: Request,
   res: Response,
   next: NextFunction
 ): Response => {
-  if (error instanceof ValidationError) {
-    return res.status(400).json({ code: 400, error: error.errors });
+  if (err instanceof ValidationError) {
+    return res.status(400).json({ code: 400, error: err.errors });
   }
 
-  console.error(error);
+  if (err instanceof AppError) {
+    return res.status(err.code).json({ code: err.code, error: err.error });
+  }
+
+  console.error(err);
 
   return res.status(500).json({ code: 500, error: 'Internal server error.' });
 };
