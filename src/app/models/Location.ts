@@ -6,7 +6,6 @@ import {
   UpdateDateColumn,
   JoinColumn,
   OneToOne,
-  Double,
 } from 'typeorm';
 import { SurvivorEntity } from './Survivor';
 
@@ -20,10 +19,10 @@ export class LocationEntity {
   survivor!: SurvivorEntity;
 
   @Column()
-  latitude!: Double;
+  latitude!: number;
 
   @Column()
-  longitude!: Double;
+  longitude!: number;
 
   @CreateDateColumn()
   created_at!: Date;

@@ -21,11 +21,11 @@ export class Location1606346153862 implements MigrationInterface {
           },
           {
             name: 'latitude',
-            type: 'double',
+            type: 'int',
           },
           {
             name: 'longitude',
-            type: 'double',
+            type: 'int',
           },
           {
             name: 'created_at',

@@ -53,7 +53,7 @@ export class Server {
 
   public start(): void {
     this.server = this.app.listen(this.port, () => {
-      console.info(`\nServer start with successfully on PORT ${this.port}`);
+      console.info(`\n🚀Server start with successfully on PORT ${this.port}`);
     });
   }
 }
