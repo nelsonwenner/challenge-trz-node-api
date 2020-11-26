@@ -1,5 +1,7 @@
 import './utils/module-alias';
+import 'express-async-errors';
 import * as database from '@src/config/database/database';
+import errorHandler from './utils/error-handler';
 import Express, { Application } from 'express';
 import router from './routes/indexRouter';
 import * as http from 'http';
@@ -31,6 +33,7 @@ export class Server {
     this.app.use(Express.json());
     this.app.use(cors({ origin: '*' }));
     router.forEach((route) => this.app.use(route));
+    this.app.use(errorHandler);
   }
 
   private async setupDatabase(): Promise<void> {
