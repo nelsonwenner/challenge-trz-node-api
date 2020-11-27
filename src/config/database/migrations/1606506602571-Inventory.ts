@@ -47,6 +47,7 @@ export class Inventory1606506602571 implements MigrationInterface {
         columnNames: ['survivorId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'survivors',
+        name: 'InventorySurvivor',
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       })
@@ -54,7 +55,7 @@ export class Inventory1606506602571 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('inventories', 'survivorId');
+    await queryRunner.dropForeignKey('inventories', 'InventorySurvivor');
     await queryRunner.dropColumn('inventories', 'survivorId');
   }
 }
