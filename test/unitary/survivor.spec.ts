@@ -1,8 +1,39 @@
 import { name, age, sex, item, latitude, longitude } from '../mock/survivor';
+import { Connection, getConnection } from 'typeorm';
+import { connect } from '@src/config/database/database';
 
 const prefix = '/survivors';
 
+let connection: Connection;
+
 describe('Survivor unitary test', () => {
+  beforeAll(async () => {
+    connection = await connect('tes-connection');
+
+    await connection.query('DROP TABLE IF EXISTS locations');
+    await connection.query('DROP TABLE IF EXISTS survivors');
+    await connection.query('DROP TABLE IF EXISTS migrations');
+
+    await connection.runMigrations();
+  });
+
+  beforeEach(async () => {
+    await connection.query('DELETE FROM locations');
+    await connection.query('DELETE FROM survivors');
+  });
+
+  afterEach(async () => {
+    await connection.query('DELETE FROM locations');
+    await connection.query('DELETE FROM survivors');
+  });
+
+  afterAll(async () => {
+    const mainConnection = getConnection();
+
+    await connection.close();
+    await mainConnection.close();
+  });
+
   describe('When creating a new survivor', () => {
     test('Should return 400 if name does not is provided', async () => {
       const reqFake = {
