@@ -1,6 +1,6 @@
 import { name, age, sex, item, latitude, longitude } from '../mock/survivor';
-import { Connection, getConnection } from 'typeorm';
 import { connect } from '@src/config/database/database';
+import { Connection } from 'typeorm';
 
 const prefix = '/survivors';
 
@@ -28,10 +28,7 @@ describe('Survivor unitary test', () => {
   });
 
   afterAll(async () => {
-    const mainConnection = getConnection();
-
     await connection.close();
-    await mainConnection.close();
   });
 
   describe('When creating a new survivor', () => {
