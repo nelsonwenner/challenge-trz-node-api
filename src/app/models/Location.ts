@@ -7,7 +7,7 @@ import {
   JoinColumn,
   OneToOne,
 } from 'typeorm';
-import { SurvivorEntity } from './Survivor';
+import SurvivorEntity from './Survivor';
 
 @Entity('locations')
 export class LocationEntity {

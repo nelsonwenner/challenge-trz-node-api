@@ -37,11 +37,12 @@ export class Server {
   }
 
   private async setupDatabase(): Promise<void> {
-    await database.connect();
+    const conn = await database.connect();
+    conn.isConnected && console.log(`🚀 Database start with successfully`);
   }
 
   public async close(): Promise<void> {
-    //await database.close();
+    await database.close();
     if (this.server) {
       await new Promise((resolve, reject) => {
         this.server?.close((err) => {
@@ -56,7 +57,7 @@ export class Server {
 
   public start(): void {
     this.server = this.app.listen(this.port, () => {
-      console.info(`\n🚀 Server start with successfully on PORT ${this.port}`);
+      console.info(`🚀 Server start with successfully on PORT ${this.port}`);
     });
   }
 }

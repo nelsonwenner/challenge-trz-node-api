@@ -9,7 +9,7 @@ import {
 import { LocationEntity } from './Location';
 
 @Entity('survivors')
-export class SurvivorEntity {
+export default class SurvivorEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 

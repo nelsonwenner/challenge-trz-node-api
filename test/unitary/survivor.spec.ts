@@ -1,3 +1,4 @@
+import { json } from 'express';
 import { name, age, sex, item, latitude, longitude } from '../mock/survivor';
 
 const prefix = '/survivors';
