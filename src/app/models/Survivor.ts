@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   OneToOne,
 } from 'typeorm';
+import InventoryEntity from './Inventory';
 import LocationEntity from './Location';
 
 @Entity('survivors')
@@ -24,6 +25,9 @@ export default class SurvivorEntity {
 
   @Column()
   sex!: string;
+
+  @OneToOne(() => InventoryEntity, (inventory) => inventory.survivor)
+  inventory!: InventoryEntity;
 
   @OneToOne(() => LocationEntity, (location) => location.survivor)
   location!: LocationEntity;
