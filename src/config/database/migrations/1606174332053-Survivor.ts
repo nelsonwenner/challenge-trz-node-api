@@ -20,6 +20,7 @@ export class Survivor1606174332053 implements MigrationInterface {
           {
             name: 'infected',
             type: 'boolean',
+            default: false,
           },
           {
             name: 'age',

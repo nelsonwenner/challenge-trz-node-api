@@ -16,7 +16,7 @@ export default class SurvivorEntity {
   @Column()
   name!: string;
 
-  @Column()
+  @Column({ default: false })
   infected!: boolean;
 
   @Column()
