@@ -14,7 +14,7 @@ export default class LocationEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @OneToOne(() => SurvivorEntity)
+  @OneToOne(() => SurvivorEntity, (survivor) => survivor.location)
   @JoinColumn()
   survivor!: SurvivorEntity;
 
@@ -30,3 +30,8 @@ export default class LocationEntity {
   @UpdateDateColumn()
   updated_at!: Date;
 }
+
+/**
+ * @JoinColumn: it must be defined on only one side of the relationship
+ * the side that must have the foreign key in the database table.
+ */

@@ -55,12 +55,14 @@ export class Location1606346153862 implements MigrationInterface {
         columnNames: ['survivorId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'survivors',
-        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       })
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('locations');
+    await queryRunner.dropForeignKey('locations', 'survivorId');
+    await queryRunner.dropColumn('locations', 'survivorId');
   }
 }
