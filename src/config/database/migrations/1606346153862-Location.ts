@@ -14,7 +14,7 @@ export class Location1606346153862 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
@@ -45,7 +45,7 @@ export class Location1606346153862 implements MigrationInterface {
       'locations',
       new TableColumn({
         name: 'survivorId',
-        type: 'varchar',
+        type: 'uuid',
       })
     );
 

@@ -14,7 +14,7 @@ export class Inventory1606506602571 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
@@ -37,7 +37,7 @@ export class Inventory1606506602571 implements MigrationInterface {
       'inventories',
       new TableColumn({
         name: 'survivorId',
-        type: 'varchar',
+        type: 'uuid',
       })
     );
 
