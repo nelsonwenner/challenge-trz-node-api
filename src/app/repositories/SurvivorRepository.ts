@@ -1,4 +1,4 @@
-import { SurvivorEntity } from '../models/Survivor';
+import SurvivorEntity from '../models/Survivor';
 import { getRepository } from 'typeorm';
 
 interface SurvivorModel {

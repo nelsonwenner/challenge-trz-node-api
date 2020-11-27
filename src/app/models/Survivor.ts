@@ -9,14 +9,14 @@ import {
 import { LocationEntity } from './Location';
 
 @Entity('survivors')
-export class SurvivorEntity {
+export default class SurvivorEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column()
   name!: string;
 
-  @Column()
+  @Column({ default: false })
   infected!: boolean;
 
   @Column()

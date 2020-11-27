@@ -7,4 +7,5 @@ if [ ! -f ".env" ]; then
 fi
 
 npm install
+npm run typeorm:cli migration:run
 npm run dev
