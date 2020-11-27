@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   OneToOne,
 } from 'typeorm';
-import { LocationEntity } from './Location';
+import LocationEntity from './Location';
 
 @Entity('survivors')
 export default class SurvivorEntity {

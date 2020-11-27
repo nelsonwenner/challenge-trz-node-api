@@ -10,7 +10,7 @@ import {
 import SurvivorEntity from './Survivor';
 
 @Entity('locations')
-export class LocationEntity {
+export default class LocationEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
