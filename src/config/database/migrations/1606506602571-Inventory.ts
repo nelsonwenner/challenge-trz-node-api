@@ -10,7 +10,7 @@ export class Inventory1606506602571 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'repositories',
+        name: 'inventories',
         columns: [
           {
             name: 'id',
