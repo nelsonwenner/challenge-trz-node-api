@@ -1,3 +1,4 @@
+import { InventoryRepository } from '../repositories/InventoryRepository';
 import { SurvivorRepository } from '../repositories/SurvivorRepository';
 import { LocationRepository } from '../repositories/LocationRepository';
 import { Request, Response } from 'express';
@@ -9,6 +10,10 @@ export default class SurvivorController {
 
     await getManager().transaction(async (transaction) => {
       const { id } = await SurvivorRepository.create(data, transaction);
+      await InventoryRepository.create(
+        { survivor: id, ...inventory },
+        transaction
+      );
       await LocationRepository.create(
         { survivor: id, ...location },
         transaction

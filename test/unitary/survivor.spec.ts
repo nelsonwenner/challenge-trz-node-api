@@ -11,6 +11,7 @@ describe('Survivor unitary test', () => {
     connection = await connect('tes-connection');
 
     await connection.query('DROP TABLE IF EXISTS locations');
+    await connection.query('DROP TABLE IF EXISTS inventories');
     await connection.query('DROP TABLE IF EXISTS survivors');
     await connection.query('DROP TABLE IF EXISTS migrations');
 
@@ -19,11 +20,13 @@ describe('Survivor unitary test', () => {
 
   beforeEach(async () => {
     await connection.query('DELETE FROM locations');
+    await connection.query('DELETE FROM inventories');
     await connection.query('DELETE FROM survivors');
   });
 
   afterEach(async () => {
     await connection.query('DELETE FROM locations');
+    await connection.query('DELETE FROM inventories');
     await connection.query('DELETE FROM survivors');
   });
 
