@@ -19,7 +19,7 @@ export default class InventoryEntity {
   @JoinColumn()
   survivor!: SurvivorEntity;
 
-  @OneToMany(() => ResourceEntity, (resource) => resource.repository)
+  @OneToMany(() => ResourceEntity, (resource) => resource.inventory)
   resource!: ResourceEntity[];
 
   @CreateDateColumn()

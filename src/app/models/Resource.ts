@@ -17,7 +17,7 @@ export default class ResourceEntity {
 
   @ManyToOne(() => InventoryEntity, (inventory) => inventory.resource)
   @JoinColumn()
-  repository!: InventoryEntity;
+  inventory!: InventoryEntity;
 
   @ManyToOne(() => ItemEntity, (item) => item.resource)
   @JoinColumn()

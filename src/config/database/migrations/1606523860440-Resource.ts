@@ -1,5 +1,6 @@
 import {
   MigrationInterface,
+  TableForeignKey,
   QueryRunner,
   TableColumn,
   TableUnique,
@@ -20,6 +21,10 @@ export class Resource1606523860440 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
+            name: 'quantity',
+            type: 'int',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
@@ -36,7 +41,7 @@ export class Resource1606523860440 implements MigrationInterface {
     await queryRunner.addColumn(
       'resources',
       new TableColumn({
-        name: 'repositoryId',
+        name: 'inventoryId',
         type: 'uuid',
       })
     );
@@ -49,18 +54,44 @@ export class Resource1606523860440 implements MigrationInterface {
       })
     );
 
+    await queryRunner.createForeignKey(
+      'resources',
+      new TableForeignKey({
+        columnNames: ['inventoryId'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'inventories',
+        name: 'ResourceInventory',
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      })
+    );
+
+    await queryRunner.createForeignKey(
+      'resources',
+      new TableForeignKey({
+        columnNames: ['itemId'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'items',
+        name: 'ResourceItem',
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      })
+    );
+
     await queryRunner.createUniqueConstraint(
       'resources',
       new TableUnique({
         name: 'UniquePairOfResource',
-        columnNames: ['repositoryId', 'itemId'],
+        columnNames: ['inventoryId', 'itemId'],
       })
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropForeignKey('resources', 'ResourceInventory');
+    await queryRunner.dropForeignKey('resources', 'ResourceItem');
     await queryRunner.dropUniqueConstraint('resources', 'UniquePairOfResource');
-    await queryRunner.dropColumn('resources', 'repositoryId');
+    await queryRunner.dropColumn('resources', 'inventoryId');
     await queryRunner.dropColumn('resources', 'itemId');
   }
 }

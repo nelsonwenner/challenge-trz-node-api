@@ -12,7 +12,7 @@ export default async (
     sex: Yup.string().required(),
     inventory: Yup.array(
       Yup.object({
-        item: Yup.number().integer().positive().required(),
+        itemId: Yup.string().required(),
         quantity: Yup.number().integer().required(),
       }).required()
     ).required(),
