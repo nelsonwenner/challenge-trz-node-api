@@ -1,9 +1,15 @@
 import SurvivorEntity from '../models/Survivor';
 import { QueryRunner } from 'typeorm';
 
+interface ReqSurvivor {
+  name: string;
+  age: number;
+  sex: string;
+}
+
 export class SurvivorRepository {
   public static async create(
-    data: SurvivorEntity,
+    data: ReqSurvivor,
     queryRunner: QueryRunner
   ): Promise<SurvivorEntity> {
     const { connection } = queryRunner;
