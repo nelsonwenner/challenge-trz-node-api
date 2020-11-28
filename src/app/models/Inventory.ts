@@ -1,16 +1,17 @@
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   JoinColumn,
+  OneToMany,
   OneToOne,
 } from 'typeorm';
 import SurvivorEntity from './Survivor';
+import ResourceEntity from './Resource';
 
-@Entity('locations')
-export default class LocationEntity {
+@Entity('inventories')
+export default class InventoryEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -18,11 +19,8 @@ export default class LocationEntity {
   @JoinColumn()
   survivor!: SurvivorEntity;
 
-  @Column()
-  latitude!: number;
-
-  @Column()
-  longitude!: number;
+  @OneToMany(() => ResourceEntity, (resource) => resource.repository)
+  resource!: ResourceEntity[];
 
   @CreateDateColumn()
   created_at!: Date;
@@ -30,8 +28,3 @@ export default class LocationEntity {
   @UpdateDateColumn()
   updated_at!: Date;
 }
-
-/**
- * @JoinColumn: it must be defined on only one side of the relationship
- * the side that must have the foreign key in the database table.
- */

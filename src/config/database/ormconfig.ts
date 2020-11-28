@@ -13,7 +13,10 @@ const options = {
     env === 'development' || env === 'test'
       ? process.env.DB_NAME_TEST
       : process.env.DB_NAME,
-  migrations: [path.resolve(__dirname, 'migrations', '*')],
+  migrations: [
+    path.resolve(__dirname, 'migrations', '*'),
+    path.resolve(__dirname, 'seeders', '*'),
+  ],
   entities: [path.resolve(__dirname, '..', '..', 'app', 'models', '*')],
   cli: { migrationsDir: 'src/config/database/migrations' },
   logging: !(env === 'test'),

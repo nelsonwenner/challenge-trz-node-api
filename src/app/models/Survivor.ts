@@ -6,7 +6,8 @@ import {
   UpdateDateColumn,
   OneToOne,
 } from 'typeorm';
-import { LocationEntity } from './Location';
+import InventoryEntity from './Inventory';
+import LocationEntity from './Location';
 
 @Entity('survivors')
 export default class SurvivorEntity {
@@ -25,6 +26,9 @@ export default class SurvivorEntity {
   @Column()
   sex!: string;
 
+  @OneToOne(() => InventoryEntity, (inventory) => inventory.survivor)
+  inventory!: InventoryEntity;
+
   @OneToOne(() => LocationEntity, (location) => location.survivor)
   location!: LocationEntity;
 
@@ -34,3 +38,10 @@ export default class SurvivorEntity {
   @UpdateDateColumn()
   updated_at!: Date;
 }
+
+/**
+ * @JoinColumn: We just made our relationship bidirectional. Notice,
+ * the inverse relationship does not have an @JoinColumn. @JoinColum
+ * must be on only one side of the relationship - at the table that
+ * will hold the foreign key.
+ */

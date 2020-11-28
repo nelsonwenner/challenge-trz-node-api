@@ -1,16 +1,16 @@
 import {
   MigrationInterface,
   QueryRunner,
-  Table,
   TableColumn,
-  TableForeignKey,
+  TableUnique,
+  Table,
 } from 'typeorm';
 
-export class Location1606346153862 implements MigrationInterface {
+export class Resource1606523860440 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'locations',
+        name: 'resources',
         columns: [
           {
             name: 'id',
@@ -18,14 +18,6 @@ export class Location1606346153862 implements MigrationInterface {
             isPrimary: true,
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
-          },
-          {
-            name: 'latitude',
-            type: 'float',
-          },
-          {
-            name: 'longitude',
-            type: 'float',
           },
           {
             name: 'created_at',
@@ -42,28 +34,33 @@ export class Location1606346153862 implements MigrationInterface {
     );
 
     await queryRunner.addColumn(
-      'locations',
+      'resources',
       new TableColumn({
-        name: 'survivorId',
+        name: 'repositoryId',
         type: 'uuid',
       })
     );
 
-    await queryRunner.createForeignKey(
-      'locations',
-      new TableForeignKey({
-        columnNames: ['survivorId'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'survivors',
-        name: 'LocationSurvivor',
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+    await queryRunner.addColumn(
+      'resources',
+      new TableColumn({
+        name: 'itemId',
+        type: 'uuid',
+      })
+    );
+
+    await queryRunner.createUniqueConstraint(
+      'resources',
+      new TableUnique({
+        name: 'UniquePairOfResource',
+        columnNames: ['repositoryId', 'itemId'],
       })
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('locations', 'LocationSurvivor');
-    await queryRunner.dropColumn('locations', 'survivorId');
+    await queryRunner.dropUniqueConstraint('resources', 'UniquePairOfResource');
+    await queryRunner.dropColumn('resources', 'repositoryId');
+    await queryRunner.dropColumn('resources', 'itemId');
   }
 }

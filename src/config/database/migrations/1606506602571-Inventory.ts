@@ -6,11 +6,11 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class Location1606346153862 implements MigrationInterface {
+export class Inventory1606506602571 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'locations',
+        name: 'inventories',
         columns: [
           {
             name: 'id',
@@ -18,14 +18,6 @@ export class Location1606346153862 implements MigrationInterface {
             isPrimary: true,
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
-          },
-          {
-            name: 'latitude',
-            type: 'float',
-          },
-          {
-            name: 'longitude',
-            type: 'float',
           },
           {
             name: 'created_at',
@@ -42,7 +34,7 @@ export class Location1606346153862 implements MigrationInterface {
     );
 
     await queryRunner.addColumn(
-      'locations',
+      'inventories',
       new TableColumn({
         name: 'survivorId',
         type: 'uuid',
@@ -50,12 +42,12 @@ export class Location1606346153862 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'locations',
+      'inventories',
       new TableForeignKey({
         columnNames: ['survivorId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'survivors',
-        name: 'LocationSurvivor',
+        name: 'InventorySurvivor',
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       })
@@ -63,7 +55,7 @@ export class Location1606346153862 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('locations', 'LocationSurvivor');
-    await queryRunner.dropColumn('locations', 'survivorId');
+    await queryRunner.dropForeignKey('inventories', 'InventorySurvivor');
+    await queryRunner.dropColumn('inventories', 'survivorId');
   }
 }
