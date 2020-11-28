@@ -1,15 +1,16 @@
-import { getRepository, EntityManager } from 'typeorm';
 import LocationEntity from '../models/Location';
+import { QueryRunner } from 'typeorm';
 
 export class LocationRepository {
   public static async create(
     data: LocationEntity,
-    transaction: EntityManager
+    queryRunner: QueryRunner
   ): Promise<LocationEntity> {
-    const locationsRepository = getRepository(LocationEntity);
+    const { connection } = queryRunner;
+    const locationsRepository = connection.getRepository(LocationEntity);
     const location = locationsRepository.create(data);
     location.survivor = data.survivor;
-    await transaction.save(location);
+    await locationsRepository.save(location);
     return location;
   }
 }
