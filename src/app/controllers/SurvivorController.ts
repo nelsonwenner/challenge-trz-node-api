@@ -2,24 +2,37 @@ import { InventoryRepository } from '../repositories/InventoryRepository';
 import { SurvivorRepository } from '../repositories/SurvivorRepository';
 import { LocationRepository } from '../repositories/LocationRepository';
 import { Request, Response } from 'express';
-import { getManager } from 'typeorm';
+import AppError from '@src/utils/AppError';
+import { getConnection } from 'typeorm';
 
 export default class SurvivorController {
   public static async create(req: Request, res: Response): Promise<Response> {
     const { inventory, location, ...data } = req.body;
 
-    await getManager().transaction(async (transaction) => {
-      const { id } = await SurvivorRepository.create(data, transaction);
+    const connection = getConnection();
+    const queryRunner = connection.createQueryRunner();
+
+    await queryRunner.startTransaction();
+
+    try {
+      const { id } = await SurvivorRepository.create(data, queryRunner);
       await InventoryRepository.create(
         { survivor: id, ...inventory },
-        transaction
+        queryRunner
       );
       await LocationRepository.create(
         { survivor: id, ...location },
-        transaction
+        queryRunner
       );
-    });
 
-    return res.status(201).json({});
+      await queryRunner.commitTransaction();
+
+      return res.status(201).json({ id });
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw new AppError('Internal server error.', 500);
+    } finally {
+      await queryRunner.release();
+    }
   }
 }

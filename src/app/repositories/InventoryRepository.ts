@@ -1,15 +1,16 @@
-import { getRepository, EntityManager } from 'typeorm';
 import InventoryEntity from '../models/Inventory';
+import { QueryRunner } from 'typeorm';
 
 export class InventoryRepository {
   public static async create(
     data: InventoryEntity,
-    transaction: EntityManager
+    queryRunner: QueryRunner
   ): Promise<InventoryEntity> {
-    const inventoryRepository = getRepository(InventoryEntity);
+    const { connection } = queryRunner;
+    const inventoryRepository = connection.getRepository(InventoryEntity);
     const inventory = inventoryRepository.create(data);
     inventory.survivor = data.survivor;
-    await transaction.save(inventory);
+    await inventoryRepository.save(inventory);
     return inventory;
   }
 }
