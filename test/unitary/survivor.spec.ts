@@ -154,6 +154,27 @@ describe('Survivor unitary test', () => {
       });
     });
 
+    test('Should return 400 if quantity does not is provided', async () => {
+      const reqFake = {
+        name: name(),
+        age: age(),
+        sex: sex(),
+        inventory: [{ itemId: idCampbellSoup() }],
+        location: {
+          latitude: latitude(),
+          longitude: longitude(),
+        },
+      };
+
+      const res = await global.testRequest.post(prefix).send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: ['inventory[0].quantity is a required field'],
+      });
+    });
+
     test('Should return 400 if location does not is provided', async () => {
       const reqFake = {
         name: name(),
