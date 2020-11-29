@@ -1,3 +1,4 @@
+import { strict } from 'assert';
 import { Request, Response, NextFunction } from 'express';
 import * as Yup from 'yup';
 
@@ -10,12 +11,14 @@ export default async (
     name: Yup.string().required(),
     age: Yup.number().integer().positive().required(),
     sex: Yup.string().required(),
-    inventory: Yup.array(
-      Yup.object({
-        itemId: Yup.string().required(),
-        quantity: Yup.number().integer().required(),
-      }).required()
-    ).required(),
+    inventory: Yup.array()
+      .of(
+        Yup.object({
+          itemId: Yup.string().required(),
+          quantity: Yup.number().integer().required(),
+        }).required()
+      )
+      .required(),
     location: Yup.object({
       latitude: Yup.number().max(180).min(-180).required(),
       longitude: Yup.number().max(180).min(-180).required(),
