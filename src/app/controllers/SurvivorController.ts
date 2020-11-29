@@ -68,7 +68,7 @@ export default class SurvivorController {
     } catch (error) {
       console.error(error);
       await queryRunner.rollbackTransaction();
-      throw new AppError('Internal server error.', 500);
+      throw new AppError(error.message, 400);
     } finally {
       await queryRunner.release();
     }

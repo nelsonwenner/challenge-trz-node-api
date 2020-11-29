@@ -256,5 +256,27 @@ describe('Survivor unitary test', () => {
 
       expect(res.status).toBe(201);
     });
+
+    test('Should return 400 if item duplicate key value', async () => {
+      const reqFake = {
+        name: name(),
+        age: age(),
+        sex: sex(),
+        inventory: [
+          item(idCampbellSoup()),
+          item(idCampbellSoup()),
+          item(idFirstAidPouch()),
+          item(idAK47()),
+        ],
+        location: {
+          latitude: latitude(),
+          longitude: longitude(),
+        },
+      };
+
+      const res = await global.testRequest.post(prefix).send(reqFake);
+
+      expect(res.status).toBe(400);
+    });
   });
 });
