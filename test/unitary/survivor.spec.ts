@@ -195,6 +195,26 @@ describe('Survivor unitary test', () => {
       });
     });
 
+    test('Should return 400 if latitude does not is provided', async () => {
+      const reqFake = {
+        name: name(),
+        age: age(),
+        sex: sex(),
+        inventory: [item(idCampbellSoup())],
+        location: {
+          longitude: longitude(),
+        },
+      };
+
+      const res = await global.testRequest.post(prefix).send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: ['location.latitude is a required field'],
+      });
+    });
+
     test('Should return 201 when creating a new survivor', async () => {
       const reqFake = {
         name: name(),
