@@ -54,19 +54,17 @@ export default class SurvivorController {
         queryRunner
       );
 
-      const resources = inventory.map((item: ItemDTO) => {
-        return {
-          inventory: dataInventory.id,
-          item: item.itemId,
-          quantity: item.quantity,
-        };
-      });
+      const resources = inventory.map((item) => ({
+        inventory: dataInventory.id,
+        item: item.itemId,
+        quantity: item.quantity,
+      }));
 
       await ResourceRepository.create(resources, queryRunner);
 
       await queryRunner.commitTransaction();
 
-      return res.status(201).json(dataSurvivor.id);
+      return res.status(201).json({ id: dataSurvivor.id });
     } catch (error) {
       console.error(error);
       await queryRunner.rollbackTransaction();
