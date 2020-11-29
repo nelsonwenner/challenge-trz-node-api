@@ -255,6 +255,7 @@ describe('Survivor unitary test', () => {
       const res = await global.testRequest.post(prefix).send(reqFake);
 
       expect(res.status).toBe(201);
+      expect(res.body).toHaveProperty('id');
     });
 
     test('Should return 400 if item duplicate key value', async () => {
