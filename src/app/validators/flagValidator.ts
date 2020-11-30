@@ -1,4 +1,5 @@
 import { SurvivorRepository } from '@src/app/repositories/SurvivorRepository';
+import { FlagRepository } from '@src/app/repositories/FlagRepository';
 import { Request, Response, NextFunction } from 'express';
 import AppError from '@src/utils/AppError';
 import * as Yup from 'yup';
@@ -35,6 +36,15 @@ export default async (
 
   if (sender.infected || target.infected) {
     throw new AppError('Survivor infected', 400);
+  }
+
+  const senderAlreadyFlagTarget = await FlagRepository.alreadyFlagTarget({
+    sender,
+    target,
+  });
+
+  if (senderAlreadyFlagTarget) {
+    throw new AppError('Sender already flag target', 400);
   }
 
   req.user = {
