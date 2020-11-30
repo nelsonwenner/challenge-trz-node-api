@@ -18,5 +18,20 @@ describe('Location unitary test', () => {
         error: ['latitude is a required field'],
       });
     });
+
+    test('Should return 400 if longitude does not is provided', async () => {
+      const reqFake = {
+        survivorId: 'e8045711-d1b1-3341-78bf-5111269121ab',
+        latitude: latitude(),
+      };
+
+      const res = await global.testRequest.put(prefix).send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: ['longitude is a required field'],
+      });
+    });
   });
 });
