@@ -46,5 +46,20 @@ describe('Flag unitary test', () => {
         error: 'Survivor does not exists',
       });
     });
+
+    test('Should return 400 survivor can not self-flag', async () => {
+      const reqFake = {
+        senderId: '0c25ac00-1221-12b3-2b2a-123456f3c7ef',
+        targetId: '0c25ac00-1221-12b3-2b2a-123456f3c7ef',
+      };
+
+      const res = await global.testRequest.post(prefix).send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: 'You can not self-flag',
+      });
+    });
   });
 });
