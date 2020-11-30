@@ -1,9 +1,15 @@
-import { SurvivorRepository } from '@src/app/repositories/SurvivorRepository';
+import { FlagRepository } from '@src/app/repositories/FlagRepository';
 import SurvivorEntity from '@src/app/models/Survivor';
 import { Request, Response } from 'express';
 
+interface UserDTO {
+  sender: SurvivorEntity;
+  target: SurvivorEntity;
+}
+
 export default class FlagController {
   public static async create(req: Request, res: Response): Promise<Response> {
-    return res.status(200).send({});
+    const flag = await FlagRepository.create(req.user as UserDTO);
+    return res.status(201).send({ ...flag });
   }
 }
