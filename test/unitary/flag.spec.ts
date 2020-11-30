@@ -31,5 +31,20 @@ describe('Flag unitary test', () => {
         error: ['targetId is a required field'],
       });
     });
+
+    test('Should return 404 if survivor does not exists ', async () => {
+      const reqFake = {
+        senderId: '0c25ac00-1221-12b3-2b2a-123456f3c7ef',
+        targetId: '0c75ac00-6994-45b4-9b5a-891185f3c7ef',
+      };
+
+      const res = await global.testRequest.post(prefix).send(reqFake);
+
+      expect(res.status).toBe(404);
+      expect(res.body).toEqual({
+        code: 404,
+        error: 'Survivor does not exists',
+      });
+    });
   });
 });
