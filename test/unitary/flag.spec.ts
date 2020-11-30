@@ -79,5 +79,25 @@ describe('Flag unitary test', () => {
         error: 'Survivor infected',
       });
     });
+
+    test('Should return 400 if sender already flag target', async () => {
+      const sender = await createSurvivor();
+      const target = await createSurvivor();
+
+      const reqFake = {
+        senderId: sender.id,
+        targetId: target.id,
+      };
+
+      await global.testRequest.post(prefix).send(reqFake);
+
+      const res = await global.testRequest.post(prefix).send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: 'Sender already flag target',
+      });
+    });
   });
 });
