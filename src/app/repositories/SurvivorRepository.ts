@@ -1,5 +1,5 @@
+import { QueryRunner, getRepository } from 'typeorm';
 import SurvivorEntity from '../models/Survivor';
-import { QueryRunner } from 'typeorm';
 
 interface ReqSurvivor {
   name: string;
@@ -17,5 +17,13 @@ export class SurvivorRepository {
     const survivor = survivorsRepository.create(data);
     await survivorsRepository.save(survivor);
     return survivor;
+  }
+
+  public static async getSurvivor(
+    id: string
+  ): Promise<SurvivorEntity | undefined> {
+    const locationsRepository = getRepository(SurvivorEntity);
+    const location = await locationsRepository.findOne({ where: { id } });
+    return location;
   }
 }

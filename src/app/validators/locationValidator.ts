@@ -1,4 +1,4 @@
-import { LocationRepository } from '@src/app/repositories/LocationRepository';
+import { SurvivorRepository } from '@src/app/repositories/SurvivorRepository';
 import { Request, Response, NextFunction } from 'express';
 import AppError from '@src/utils/AppError';
 import * as Yup from 'yup';
@@ -16,7 +16,7 @@ export default async (
 
   await schema.validate(req.body, { abortEarly: false });
 
-  const survivor = await LocationRepository.getLocation(req.body.survivorId);
+  const survivor = await SurvivorRepository.getSurvivor(req.body.survivorId);
 
   if (!survivor) {
     throw new AppError('Survivor does not exists', 404);
