@@ -1,5 +1,5 @@
+import { QueryRunner, getRepository } from 'typeorm';
 import LocationEntity from '../models/Location';
-import { QueryRunner } from 'typeorm';
 
 export class LocationRepository {
   public static async create(
@@ -11,6 +11,14 @@ export class LocationRepository {
     const location = locationsRepository.create(data);
     location.survivor = data.survivor;
     await locationsRepository.save(location);
+    return location;
+  }
+
+  public static async getLocation(
+    id: string
+  ): Promise<LocationEntity | undefined> {
+    const locationsRepository = getRepository(LocationEntity);
+    const location = locationsRepository.findOne({ id });
     return location;
   }
 }

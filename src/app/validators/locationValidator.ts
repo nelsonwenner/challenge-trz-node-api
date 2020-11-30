@@ -1,11 +1,13 @@
+import { LocationRepository } from '@src/app/repositories/LocationRepository';
 import { Request, Response, NextFunction } from 'express';
+import AppError from '@src/utils/AppError';
 import * as Yup from 'yup';
 
 export default async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<any> => {
+): Promise<void> => {
   const schema = Yup.object({
     survivorId: Yup.string().required(),
     latitude: Yup.number().max(180).min(-180).required(),
@@ -13,6 +15,14 @@ export default async (
   }).required();
 
   await schema.validate(req.body, { abortEarly: false });
+
+  const survivor = await LocationRepository.getLocation(req.body.survivorId);
+
+  if (!survivor) {
+    throw new AppError('Survivor does not exists', 404);
+  }
+
+  req.user = survivor;
 
   return next();
 };

@@ -48,5 +48,21 @@ describe('Location unitary test', () => {
         error: ['longitude is a required field'],
       });
     });
+
+    test('Should return 404 if survivor does not exists', async () => {
+      const reqFake = {
+        survivorId: 'e8045711-d1b1-3341-78bf-5111269121ab',
+        latitude: latitude(),
+        longitude: longitude(),
+      };
+
+      const res = await global.testRequest.put(prefix).send(reqFake);
+
+      expect(res.status).toBe(404);
+      expect(res.body).toEqual({
+        code: 404,
+        error: 'Survivor does not exists',
+      });
+    });
   });
 });
