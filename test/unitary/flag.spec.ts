@@ -61,5 +61,23 @@ describe('Flag unitary test', () => {
         error: 'You can not self-flag',
       });
     });
+
+    test('Should return 400 if survivor is infected', async () => {
+      const sender = await createSurvivor(true);
+      const target = await createSurvivor();
+
+      const reqFake = {
+        senderId: sender.id,
+        targetId: target.id,
+      };
+
+      const res = await global.testRequest.post(prefix).send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: 'Survivor infected',
+      });
+    });
   });
 });

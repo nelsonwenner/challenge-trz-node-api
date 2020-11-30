@@ -33,6 +33,10 @@ export default async (
     throw new AppError('Survivor does not exists', 404);
   }
 
+  if (sender.infected || target.infected) {
+    throw new AppError('Survivor infected', 400);
+  }
+
   req.user = {
     sender,
     target,
