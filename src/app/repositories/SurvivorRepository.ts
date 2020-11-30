@@ -20,8 +20,8 @@ export class SurvivorRepository {
   }
 
   public static async getSurvivor(id: string): Promise<SurvivorEntity> {
-    const locationsRepository = getRepository(SurvivorEntity);
-    const location = await locationsRepository.findOne({ where: { id } });
-    return location;
+    const survivorRepository = getRepository(SurvivorEntity);
+    const survivor = await survivorRepository.findOne({ where: { id } });
+    return survivor;
   }
 }

@@ -1,5 +1,5 @@
-import SurvivorEntity from '@src/app/models/Survivor';
-import FlagEntity from '@src/app/models/Flag';
+import SurvivorEntity from '../models/Survivor';
+import FlagEntity from '../models/Flag';
 import { getRepository } from 'typeorm';
 
 interface DataDTO {
@@ -23,5 +23,11 @@ export class FlagRepository {
       where: { sender: data.sender, target: data.target },
     });
     return flag;
+  }
+
+  public static async countFlags(survivor: SurvivorEntity): Promise<number> {
+    const flagRepository = getRepository(FlagEntity);
+    const flags = await flagRepository.count({ id: survivor.id });
+    return flags;
   }
 }

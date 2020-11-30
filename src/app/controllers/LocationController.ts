@@ -1,5 +1,5 @@
-import SurvivorEntity from '@src/app/models/Survivor';
-import { LocationRepository } from '@src/app/repositories/LocationRepository';
+import { LocationRepository } from '../repositories/LocationRepository';
+import SurvivorEntity from '../models/Survivor';
 import { Request, Response } from 'express';
 
 interface BodyTDO {

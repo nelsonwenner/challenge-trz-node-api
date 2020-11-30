@@ -1,4 +1,4 @@
-import { SurvivorRepository } from '@src/app/repositories/SurvivorRepository';
+import { SurvivorRepository } from '../repositories/SurvivorRepository';
 import { Request, Response, NextFunction } from 'express';
 import AppError from '@src/utils/AppError';
 import * as Yup from 'yup';

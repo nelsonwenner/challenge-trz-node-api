@@ -1,5 +1,5 @@
-import SurvivorEntity from '@src/app/models/Survivor';
 import InventoryEntity from '../models/Inventory';
+import SurvivorEntity from '../models/Survivor';
 import { QueryRunner } from 'typeorm';
 
 export class InventoryRepository {

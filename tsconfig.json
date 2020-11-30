@@ -6,9 +6,10 @@
     "lib": ["es2019"],
     "sourceMap": true,
     "outDir": "dist",
-    "baseUrl": ".",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
     "paths": {
       "@src/*": ["./src/*"],
       "@test/*": ["./test/*"]

@@ -1,5 +1,5 @@
-import { FlagRepository } from '@src/app/repositories/FlagRepository';
-import SurvivorEntity from '@src/app/models/Survivor';
+import { FlagRepository } from '../repositories/FlagRepository';
+import SurvivorEntity from '../models/Survivor';
 import { Request, Response } from 'express';
 
 interface UserDTO {

@@ -1,5 +1,5 @@
-import SurvivorEntity from '@src/app/models/Survivor';
 import { QueryRunner, getRepository } from 'typeorm';
+import SurvivorEntity from '../models/Survivor';
 import LocationEntity from '../models/Location';
 
 interface DataTDO {

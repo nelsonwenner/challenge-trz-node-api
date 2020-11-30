@@ -1,5 +1,5 @@
-import { SurvivorRepository } from '@src/app/repositories/SurvivorRepository';
-import { FlagRepository } from '@src/app/repositories/FlagRepository';
+import { SurvivorRepository } from '../repositories/SurvivorRepository';
+import { FlagRepository } from '../repositories/FlagRepository';
 import { Request, Response, NextFunction } from 'express';
 import AppError from '@src/utils/AppError';
 import * as Yup from 'yup';
