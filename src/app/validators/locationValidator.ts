@@ -7,6 +7,7 @@ export default async (
   next: NextFunction
 ): Promise<any> => {
   const schema = Yup.object({
+    survivorId: Yup.string().required(),
     latitude: Yup.number().max(180).min(-180).required(),
     longitude: Yup.number().max(180).min(-180).required(),
   }).required();
