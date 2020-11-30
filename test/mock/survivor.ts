@@ -2,9 +2,6 @@ import { InventoryRepository } from '@src/app/repositories/InventoryRepository';
 import { SurvivorRepository } from '@src/app/repositories/SurvivorRepository';
 import { LocationRepository } from '@src/app/repositories/LocationRepository';
 import { ResourceRepository } from '@src/app/repositories/ResourceRepository';
-import InventoryEntity from '@src/app/models/Inventory';
-import SurvivorEntity from '@src/app/models/Survivor';
-import LocationEntity from '@src/app/models/Location';
 import { getConnection } from 'typeorm';
 import {
   idCampbellSoup,
@@ -67,18 +64,18 @@ export const createSurvivor = async (): Promise<string> => {
 
   const { inventory, location, ...data } = mockSurvivorModel();
 
-  const dataSurvivor = await SurvivorRepository.create(data, queryRunner);
+  const survivorData = await SurvivorRepository.create(data, queryRunner);
+
   const dataInventory = await InventoryRepository.create(
-    ({
-      survivor: dataSurvivor.id,
-    } as unknown) as InventoryEntity,
+    survivorData,
     queryRunner
   );
+
   await LocationRepository.create(
-    ({
-      survivor: dataSurvivor.id,
+    {
+      survivor: survivorData,
       ...location,
-    } as unknown) as LocationEntity,
+    },
     queryRunner
   );
 
@@ -89,5 +86,5 @@ export const createSurvivor = async (): Promise<string> => {
   }));
 
   await ResourceRepository.create(resources, queryRunner);
-  return dataSurvivor.id;
+  return survivorData.id;
 };

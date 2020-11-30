@@ -1,7 +1,7 @@
 import { QueryRunner, getRepository } from 'typeorm';
 import SurvivorEntity from '../models/Survivor';
 
-interface ReqSurvivor {
+interface DataDTO {
   name: string;
   age: number;
   sex: string;
@@ -9,7 +9,7 @@ interface ReqSurvivor {
 
 export class SurvivorRepository {
   public static async create(
-    data: ReqSurvivor,
+    data: DataDTO,
     queryRunner: QueryRunner
   ): Promise<SurvivorEntity> {
     const { connection } = queryRunner;
@@ -19,9 +19,7 @@ export class SurvivorRepository {
     return survivor;
   }
 
-  public static async getSurvivor(
-    id: string
-  ): Promise<SurvivorEntity | undefined> {
+  public static async getSurvivor(id: string): Promise<SurvivorEntity> {
     const locationsRepository = getRepository(SurvivorEntity);
     const location = await locationsRepository.findOne({ where: { id } });
     return location;

@@ -2,9 +2,6 @@ import { InventoryRepository } from '../repositories/InventoryRepository';
 import { SurvivorRepository } from '../repositories/SurvivorRepository';
 import { LocationRepository } from '../repositories/LocationRepository';
 import { ResourceRepository } from '../repositories/ResourceRepository';
-import InventoryEntity from '../models/Inventory';
-import SurvivorEntity from '../models/Survivor';
-import LocationEntity from '../models/Location';
 import { Request, Response } from 'express';
 import AppError from '@src/utils/AppError';
 import { getConnection } from 'typeorm';
@@ -36,21 +33,15 @@ export default class SurvivorController {
     await queryRunner.startTransaction();
 
     try {
-      const dataSurvivor: SurvivorEntity = await SurvivorRepository.create(
-        data,
+      const survivorData = await SurvivorRepository.create(data, queryRunner);
+
+      const dataInventory = await InventoryRepository.create(
+        survivorData,
         queryRunner
       );
-      const dataInventory: InventoryEntity = await InventoryRepository.create(
-        ({
-          survivor: dataSurvivor.id,
-        } as unknown) as InventoryEntity,
-        queryRunner
-      );
+
       await LocationRepository.create(
-        ({
-          survivor: dataSurvivor.id,
-          ...location,
-        } as unknown) as LocationEntity,
+        { survivor: survivorData, ...location },
         queryRunner
       );
 
@@ -64,7 +55,7 @@ export default class SurvivorController {
 
       await queryRunner.commitTransaction();
 
-      return res.status(201).json({ id: dataSurvivor.id });
+      return res.status(201).json({ id: survivorData.id });
     } catch (error) {
       console.error(error);
       await queryRunner.rollbackTransaction();

@@ -1,15 +1,16 @@
+import SurvivorEntity from '@src/app/models/Survivor';
 import { QueryRunner, getRepository } from 'typeorm';
 import LocationEntity from '../models/Location';
 
 interface DataTDO {
-  survivorId: string;
+  survivor: SurvivorEntity;
   latitude: number;
   longitude: number;
 }
 
 export class LocationRepository {
   public static async create(
-    data: LocationEntity,
+    data: DataTDO,
     queryRunner: QueryRunner
   ): Promise<LocationEntity> {
     const { connection } = queryRunner;
@@ -20,13 +21,10 @@ export class LocationRepository {
     return location;
   }
 
-  public static async update(
-    survivorId: string,
-    data: DataTDO
-  ): Promise<LocationEntity> {
+  public static async update(data: DataTDO): Promise<LocationEntity> {
     const locationsRepository = getRepository(LocationEntity);
     const location = await locationsRepository.findOne({
-      where: { survivor: survivorId },
+      where: { survivor: data.survivor },
     });
     location.latitude = data.latitude;
     location.longitude = data.longitude;
