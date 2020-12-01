@@ -4,7 +4,7 @@ import {
   idFirstAidPouch,
   idAK47,
 } from '../mock/items';
-import { item, uuid } from '../mock/survivor';
+import { item, uuid, createSurvivor } from '../mock/survivor';
 
 const prefix = 'trades';
 
@@ -167,6 +167,36 @@ describe('Trade unitary test', () => {
       expect(res.body).toEqual({
         code: 404,
         error: 'Survivor does not exists',
+      });
+    });
+
+    test('Should return 400 if survivor is infected', async () => {
+      const reqFake = {
+        sender: [
+          item(idCampbellSoup()),
+          item(idFirstAidPouch()),
+          item(idFijiWater()),
+          item(idAK47()),
+        ],
+        target: [
+          item(idCampbellSoup()),
+          item(idFirstAidPouch()),
+          item(idFijiWater()),
+          item(idAK47()),
+        ],
+      };
+
+      const sender = await createSurvivor(true);
+      const target = await createSurvivor();
+
+      const res = await global.testRequest
+        .put(`/${sender.id}/${prefix}/${target.id}`)
+        .send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: 'Survivor infected',
       });
     });
   });

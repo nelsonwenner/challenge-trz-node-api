@@ -59,5 +59,9 @@ export default async (
     throw new AppError('Survivor does not exists', 404);
   }
 
+  if (senderSurvivor.infected || targetSurvivor.infected) {
+    throw new AppError('Survivor infected', 400);
+  }
+
   return next();
 };
