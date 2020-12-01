@@ -64,4 +64,9 @@ export default class SurvivorController {
       await queryRunner.release();
     }
   }
+
+  public static async index(req: Request, res: Response): Promise<Response> {
+    const survivors = await SurvivorRepository.getAll();
+    return res.status(200).json(survivors);
+  }
 }

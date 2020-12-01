@@ -3,16 +3,6 @@ import { Request, Response, NextFunction } from 'express';
 import AppError from '@src/utils/AppError';
 import * as Yup from 'yup';
 
-interface ItemDTO {
-  itemId: string;
-  quantity: number;
-}
-interface InventaryDTO extends Array<ItemDTO> {}
-interface BodyDTO {
-  sender: InventaryDTO;
-  target: InventaryDTO;
-}
-
 export default async (
   req: Request,
   res: Response,
@@ -45,7 +35,6 @@ export default async (
   await schemaParm.validate(req.params, { abortEarly: false });
   await schemaBody.validate(req.body, { abortEarly: false });
 
-  const { sender, target } = req.body as BodyDTO;
   const { senderId, targetId } = req.params;
 
   if (senderId === targetId) {
@@ -62,6 +51,11 @@ export default async (
   if (senderSurvivor.infected || targetSurvivor.infected) {
     throw new AppError('Survivor infected', 400);
   }
+
+  req.user = {
+    senderSurvivor: senderSurvivor,
+    targetSurvivor: targetSurvivor,
+  };
 
   return next();
 };

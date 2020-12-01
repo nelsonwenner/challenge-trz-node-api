@@ -38,4 +38,12 @@ export class SurvivorRepository {
     const survivor = await survivorRepository.findOne({ where: { id } });
     return survivor;
   }
+
+  public static async getAll(): Promise<SurvivorEntity[]> {
+    const survivorRepository = getRepository(SurvivorEntity);
+    const survivor = await survivorRepository.find({
+      relations: ['inventory', 'inventory.resource', 'location'],
+    });
+    return survivor;
+  }
 }
