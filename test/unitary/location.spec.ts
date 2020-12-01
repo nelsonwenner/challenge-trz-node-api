@@ -1,4 +1,4 @@
-import { latitude, longitude } from '../mock/survivor';
+import { latitude, longitude, createSurvivor } from '../mock/survivor';
 
 const prefix = '/locations';
 
@@ -63,6 +63,20 @@ describe('Location unitary test', () => {
         code: 404,
         error: 'Survivor does not exists',
       });
+    });
+
+    test('Should return 200 if location update with success', async () => {
+      const survivor = await createSurvivor();
+
+      const reqFake = {
+        survivorId: survivor.id,
+        latitude: 100.6546578,
+        longitude: -100.6546578,
+      };
+
+      const res = await global.testRequest.put(prefix).send(reqFake);
+
+      expect(res.status).toBe(200);
     });
   });
 });

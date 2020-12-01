@@ -1,4 +1,3 @@
-import { strict } from 'assert';
 import { Request, Response, NextFunction } from 'express';
 import * as Yup from 'yup';
 
@@ -6,7 +5,7 @@ export default async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<any> => {
+): Promise<void> => {
   const schema = Yup.object({
     name: Yup.string().required(),
     age: Yup.number().integer().positive().required(),

@@ -2,9 +2,7 @@ import { InventoryRepository } from '@src/app/repositories/InventoryRepository';
 import { SurvivorRepository } from '@src/app/repositories/SurvivorRepository';
 import { LocationRepository } from '@src/app/repositories/LocationRepository';
 import { ResourceRepository } from '@src/app/repositories/ResourceRepository';
-import InventoryEntity from '@src/app/models/Inventory';
 import SurvivorEntity from '@src/app/models/Survivor';
-import LocationEntity from '@src/app/models/Location';
 import { getConnection } from 'typeorm';
 import {
   idCampbellSoup,
@@ -29,6 +27,7 @@ interface SurvivorModel {
   name: string;
   age: number;
   sex: string;
+  infected: boolean;
   inventory: ItemModel[];
   location: LocationModel;
 }
@@ -43,11 +42,12 @@ export const item = (id: string): ItemModel => {
   return { itemId: id, quantity: random.int(10, 20) };
 };
 
-export const mockSurvivorModel = (): SurvivorModel => {
+export const mockSurvivorModel = (flag = false): SurvivorModel => {
   return {
     name: name(),
     age: age(),
     sex: sex(),
+    infected: flag,
     inventory: [
       item(idCampbellSoup()),
       item(idFirstAidPouch()),
@@ -61,24 +61,24 @@ export const mockSurvivorModel = (): SurvivorModel => {
   };
 };
 
-export const createSurvivor = async (): Promise<string> => {
+export const createSurvivor = async (flag = false): Promise<SurvivorEntity> => {
   const connection = getConnection();
   const queryRunner = connection.createQueryRunner();
 
-  const { inventory, location, ...data } = mockSurvivorModel();
+  const { inventory, location, ...data } = mockSurvivorModel(flag);
 
-  const dataSurvivor = await SurvivorRepository.create(data, queryRunner);
+  const survivorData = await SurvivorRepository.create(data, queryRunner);
+
   const dataInventory = await InventoryRepository.create(
-    ({
-      survivor: dataSurvivor.id,
-    } as unknown) as InventoryEntity,
+    survivorData,
     queryRunner
   );
+
   await LocationRepository.create(
-    ({
-      survivor: dataSurvivor.id,
+    {
+      survivor: survivorData,
       ...location,
-    } as unknown) as LocationEntity,
+    },
     queryRunner
   );
 
@@ -89,5 +89,5 @@ export const createSurvivor = async (): Promise<string> => {
   }));
 
   await ResourceRepository.create(resources, queryRunner);
-  return dataSurvivor.id;
+  return survivorData;
 };

@@ -1,9 +1,16 @@
 import { QueryRunner, getRepository } from 'typeorm';
+import SurvivorEntity from '../models/Survivor';
 import LocationEntity from '../models/Location';
+
+interface DataTDO {
+  survivor: SurvivorEntity;
+  latitude: number;
+  longitude: number;
+}
 
 export class LocationRepository {
   public static async create(
-    data: LocationEntity,
+    data: DataTDO,
     queryRunner: QueryRunner
   ): Promise<LocationEntity> {
     const { connection } = queryRunner;
@@ -14,11 +21,14 @@ export class LocationRepository {
     return location;
   }
 
-  public static async getLocation(
-    id: string
-  ): Promise<LocationEntity | undefined> {
+  public static async update(data: DataTDO): Promise<LocationEntity> {
     const locationsRepository = getRepository(LocationEntity);
-    const location = locationsRepository.findOne({ id });
+    const location = await locationsRepository.findOne({
+      where: { survivor: data.survivor },
+    });
+    location.latitude = data.latitude;
+    location.longitude = data.longitude;
+    await locationsRepository.save(location);
     return location;
   }
 }
