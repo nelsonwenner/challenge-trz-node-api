@@ -48,5 +48,9 @@ export default async (
   const { sender, target } = req.body as BodyDTO;
   const { senderId, targetId } = req.params;
 
+  if (senderId === targetId) {
+    throw new AppError('You can not self-trade', 400);
+  }
+
   return next();
 };

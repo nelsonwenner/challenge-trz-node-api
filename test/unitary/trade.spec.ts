@@ -113,5 +113,34 @@ describe('Trade unitary test', () => {
         error: ['sender field must have less than or equal to 4 items'],
       });
     });
+
+    test('Should return 400 survivor can not self-trade', async () => {
+      const reqFake = {
+        sender: [
+          item(idCampbellSoup()),
+          item(idFirstAidPouch()),
+          item(idFijiWater()),
+          item(idAK47()),
+        ],
+        target: [
+          item(idCampbellSoup()),
+          item(idFirstAidPouch()),
+          item(idFijiWater()),
+          item(idAK47()),
+        ],
+      };
+
+      const uuid = '477617a8-f51c-41c1-a718-58e111dc9d7e';
+
+      const res = await global.testRequest
+        .put(`/${uuid}/${prefix}/${uuid}`)
+        .send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: 'You can not self-trade',
+      });
+    });
   });
 });
