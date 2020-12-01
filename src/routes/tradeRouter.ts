@@ -4,7 +4,7 @@ import router from './configRouter';
 
 export default [
   router.put(
-    '/senderId:/trades/:targetId',
+    '/:senderId/trades/:targetId',
     tradeValidator,
     TradeController.update
   ),

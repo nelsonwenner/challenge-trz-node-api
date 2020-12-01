@@ -4,6 +4,7 @@ import { LocationRepository } from '@src/app/repositories/LocationRepository';
 import { ResourceRepository } from '@src/app/repositories/ResourceRepository';
 import SurvivorEntity from '@src/app/models/Survivor';
 import { getConnection } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 import {
   idCampbellSoup,
   idFijiWater,
@@ -38,6 +39,7 @@ export const sex = (): string => (random.int(0, 1) === 1 ? 'male' : 'female');
 export const latitude = (): number => parseInt(faker.address.latitude());
 export const longitude = (): number => parseInt(faker.address.longitude());
 export const numberRandom = (): number => random.int(10, 20);
+export const uuid = (): string => uuidv4();
 export const item = (id: string): ItemModel => {
   return { itemId: id, quantity: random.int(10, 20) };
 };
