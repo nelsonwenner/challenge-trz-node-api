@@ -1,3 +1,4 @@
+import { FlagRepository } from '@src/app/repositories/FlagRepository';
 import { createSurvivor } from '../mock/survivor';
 
 const prefix = '/flags';
@@ -98,6 +99,40 @@ describe('Flag unitary test', () => {
         code: 400,
         error: 'Sender already flag target',
       });
+    });
+
+    test('Should return 201 when infecting a survivor flagged 5x', async () => {
+      const senders = await Promise.all([
+        await createSurvivor(),
+        await createSurvivor(),
+        await createSurvivor(),
+        await createSurvivor(),
+      ]);
+
+      const sender = await createSurvivor();
+      const target = await createSurvivor();
+
+      await Promise.all([
+        senders.map(
+          async (sender) =>
+            await global.testRequest.post(prefix).send({
+              senderId: sender.id,
+              targetId: target.id,
+            })
+        ),
+      ]);
+
+      const reqFake = {
+        senderId: sender.id,
+        targetId: target.id,
+      };
+
+      const res = await global.testRequest.post(prefix).send(reqFake);
+      const amountFlags = await FlagRepository.countFlags(target);
+
+      expect(res.status).toBe(201);
+      expect(res.body.infected).toBe(true);
+      expect(amountFlags).toBe(5);
     });
   });
 });
