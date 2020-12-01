@@ -85,5 +85,33 @@ describe('Trade unitary test', () => {
         error: ['sender[0].quantity is a required field'],
       });
     });
+
+    test('Should return 400 if quantity items is bigger four', async () => {
+      const reqFake = {
+        sender: [
+          item(idCampbellSoup()),
+          item(idFirstAidPouch()),
+          item(idFijiWater()),
+          item(idAK47()),
+          item(idAK47()),
+        ],
+        target: [
+          item(idCampbellSoup()),
+          item(idFirstAidPouch()),
+          item(idFijiWater()),
+          item(idAK47()),
+        ],
+      };
+
+      const res = await global.testRequest
+        .put(`/${uuid()}/${prefix}/${uuid()}`)
+        .send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: ['sender field must have less than or equal to 4 items'],
+      });
+    });
   });
 });
