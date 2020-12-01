@@ -1,4 +1,3 @@
-import { LocationRepository } from '../repositories/LocationRepository';
 import SurvivorEntity from '../models/Survivor';
 import { Request, Response } from 'express';
 
@@ -8,7 +7,7 @@ interface BodyTDO {
   longitude: number;
 }
 
-export default class LocationController {
+export default class TradeController {
   public static async update(req: Request, res: Response): Promise<Response> {
     return res.status(200).send({});
   }
