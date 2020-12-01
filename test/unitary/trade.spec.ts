@@ -68,5 +68,22 @@ describe('Trade unitary test', () => {
         error: ['sender[0].itemId is a required field'],
       });
     });
+
+    test('Should return 400 if quantity does not is provided', async () => {
+      const reqFake = {
+        sender: [{ itemId: idCampbellSoup() }],
+        target: [{ itemId: idCampbellSoup(), quantity: 5 }],
+      };
+
+      const res = await global.testRequest
+        .put(`/${uuid()}/${prefix}/${uuid()}`)
+        .send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: ['sender[0].quantity is a required field'],
+      });
+    });
   });
 });
