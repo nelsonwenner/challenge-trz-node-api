@@ -30,5 +30,26 @@ describe('Trade unitary test', () => {
         error: ['sender is a required field'],
       });
     });
+
+    test('Should return 400 if target does not is provided', async () => {
+      const reqFake = {
+        sender: [
+          item(idCampbellSoup()),
+          item(idFirstAidPouch()),
+          item(idFijiWater()),
+          item(idAK47()),
+        ],
+      };
+
+      const res = await global.testRequest
+        .put(`/${uuid()}/${prefix}/${uuid()}`)
+        .send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: ['target is a required field'],
+      });
+    });
   });
 });
