@@ -52,5 +52,12 @@ export default async (
     throw new AppError('You can not self-trade', 400);
   }
 
+  const senderSurvivor = await SurvivorRepository.getSurvivor(senderId);
+  const targetSurvivor = await SurvivorRepository.getSurvivor(targetId);
+
+  if (!senderSurvivor || !targetSurvivor) {
+    throw new AppError('Survivor does not exists', 404);
+  }
+
   return next();
 };

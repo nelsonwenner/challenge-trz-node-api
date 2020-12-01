@@ -142,5 +142,32 @@ describe('Trade unitary test', () => {
         error: 'You can not self-trade',
       });
     });
+
+    test('Should return 400 if survivor does not exists', async () => {
+      const reqFake = {
+        sender: [
+          item(idCampbellSoup()),
+          item(idFirstAidPouch()),
+          item(idFijiWater()),
+          item(idAK47()),
+        ],
+        target: [
+          item(idCampbellSoup()),
+          item(idFirstAidPouch()),
+          item(idFijiWater()),
+          item(idAK47()),
+        ],
+      };
+
+      const res = await global.testRequest
+        .put(`/${uuid()}/${prefix}/${uuid()}`)
+        .send(reqFake);
+
+      expect(res.status).toBe(404);
+      expect(res.body).toEqual({
+        code: 404,
+        error: 'Survivor does not exists',
+      });
+    });
   });
 });
