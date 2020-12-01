@@ -19,6 +19,20 @@ export class SurvivorRepository {
     return survivor;
   }
 
+  public static async infect(
+    target: SurvivorEntity,
+    queryRunner: QueryRunner
+  ): Promise<SurvivorEntity> {
+    const { connection } = queryRunner;
+    const survivorsRepository = connection.getRepository(SurvivorEntity);
+    const survivor = await survivorsRepository.findOne({
+      where: { id: target.id },
+    });
+    survivor.infected = true;
+    await survivorsRepository.save(survivor);
+    return survivor;
+  }
+
   public static async getSurvivor(id: string): Promise<SurvivorEntity> {
     const survivorRepository = getRepository(SurvivorEntity);
     const survivor = await survivorRepository.findOne({ where: { id } });

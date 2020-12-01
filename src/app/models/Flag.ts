@@ -5,10 +5,7 @@ import {
   UpdateDateColumn,
   JoinColumn,
   ManyToOne,
-  AfterInsert,
-  getRepository,
 } from 'typeorm';
-import { FlagRepository } from '../repositories/FlagRepository';
 import SurvivorEntity from './Survivor';
 
 @Entity('flags')
@@ -29,15 +26,4 @@ export default class FlagEntity {
 
   @UpdateDateColumn()
   updated_at!: Date;
-
-  @AfterInsert()
-  async afterCreate() {
-    const amountFlagsTarget = await FlagRepository.countFlags(this.target);
-
-    if (amountFlagsTarget === 5) {
-      const survivorRepository = getRepository(SurvivorEntity);
-      this.target.infected = true;
-      await survivorRepository.save(this.target);
-    }
-  }
 }

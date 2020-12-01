@@ -1,6 +1,6 @@
+import { getRepository, QueryRunner } from 'typeorm';
 import SurvivorEntity from '../models/Survivor';
 import FlagEntity from '../models/Flag';
-import { getRepository } from 'typeorm';
 
 interface DataDTO {
   sender: SurvivorEntity;
@@ -8,8 +8,12 @@ interface DataDTO {
 }
 
 export class FlagRepository {
-  public static async create(data: DataDTO): Promise<FlagEntity> {
-    const flagRepository = getRepository(FlagEntity);
+  public static async create(
+    data: DataDTO,
+    queryRunner: QueryRunner
+  ): Promise<FlagEntity> {
+    const { connection } = queryRunner;
+    const flagRepository = connection.getRepository(FlagEntity);
     const flag = flagRepository.create(data);
     flag.sender = data.sender;
     flag.target = data.target;
@@ -27,7 +31,7 @@ export class FlagRepository {
 
   public static async countFlags(survivor: SurvivorEntity): Promise<number> {
     const flagRepository = getRepository(FlagEntity);
-    const flags = await flagRepository.count({ id: survivor.id });
+    const flags = await flagRepository.count({ target: survivor });
     return flags;
   }
 }
