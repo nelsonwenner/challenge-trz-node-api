@@ -70,7 +70,7 @@ describe('Location unitary test', () => {
 
       const reqFake = {
         survivorId: survivor.id,
-        latitude: 100.6546578,
+        latitude: 80.6546578,
         longitude: -100.6546578,
       };
 

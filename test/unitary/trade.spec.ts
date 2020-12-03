@@ -21,7 +21,7 @@ describe('Trade unitary test', () => {
       };
 
       const res = await global.testRequest
-        .put(`/${uuid()}/${prefix}/${uuid()}`)
+        .post(`/${uuid()}/${prefix}/${uuid()}`)
         .send(reqFake);
 
       expect(res.status).toBe(400);
@@ -42,7 +42,7 @@ describe('Trade unitary test', () => {
       };
 
       const res = await global.testRequest
-        .put(`/${uuid()}/${prefix}/${uuid()}`)
+        .post(`/${uuid()}/${prefix}/${uuid()}`)
         .send(reqFake);
 
       expect(res.status).toBe(400);
@@ -59,7 +59,7 @@ describe('Trade unitary test', () => {
       };
 
       const res = await global.testRequest
-        .put(`/${uuid()}/${prefix}/${uuid()}`)
+        .post(`/${uuid()}/${prefix}/${uuid()}`)
         .send(reqFake);
 
       expect(res.status).toBe(400);
@@ -76,7 +76,7 @@ describe('Trade unitary test', () => {
       };
 
       const res = await global.testRequest
-        .put(`/${uuid()}/${prefix}/${uuid()}`)
+        .post(`/${uuid()}/${prefix}/${uuid()}`)
         .send(reqFake);
 
       expect(res.status).toBe(400);
@@ -104,7 +104,7 @@ describe('Trade unitary test', () => {
       };
 
       const res = await global.testRequest
-        .put(`/${uuid()}/${prefix}/${uuid()}`)
+        .post(`/${uuid()}/${prefix}/${uuid()}`)
         .send(reqFake);
 
       expect(res.status).toBe(400);
@@ -133,7 +133,7 @@ describe('Trade unitary test', () => {
       const uuid = '477617a8-f51c-41c1-a718-58e111dc9d7e';
 
       const res = await global.testRequest
-        .put(`/${uuid}/${prefix}/${uuid}`)
+        .post(`/${uuid}/${prefix}/${uuid}`)
         .send(reqFake);
 
       expect(res.status).toBe(400);
@@ -160,7 +160,7 @@ describe('Trade unitary test', () => {
       };
 
       const res = await global.testRequest
-        .put(`/${uuid()}/${prefix}/${uuid()}`)
+        .post(`/${uuid()}/${prefix}/${uuid()}`)
         .send(reqFake);
 
       expect(res.status).toBe(404);
@@ -190,7 +190,7 @@ describe('Trade unitary test', () => {
       const target = await createSurvivor();
 
       const res = await global.testRequest
-        .put(`/${sender.id}/${prefix}/${target.id}`)
+        .post(`/${sender.id}/${prefix}/${target.id}`)
         .send(reqFake);
 
       expect(res.status).toBe(400);
