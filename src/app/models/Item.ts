@@ -11,20 +11,20 @@ import ResourceEntity from './Resource';
 @Entity('items')
 export default class ItemEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id: string;
 
   @OneToMany(() => ResourceEntity, (resource) => resource.item)
-  resource!: ResourceEntity;
+  resource: ResourceEntity[];
 
   @Column()
-  name!: string;
+  name: string;
 
   @Column()
-  value!: number;
+  value: number;
 
   @CreateDateColumn()
-  created_at!: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updated_at!: Date;
+  updated_at: Date;
 }

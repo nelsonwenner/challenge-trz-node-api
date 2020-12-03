@@ -13,22 +13,22 @@ import ItemEntity from './Item';
 @Entity('resources')
 export default class ResourceEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id: string;
 
   @ManyToOne(() => InventoryEntity, (inventory) => inventory.resource)
   @JoinColumn()
-  inventory!: InventoryEntity;
+  inventory: InventoryEntity;
 
   @ManyToOne(() => ItemEntity, (item) => item.resource)
   @JoinColumn()
-  item!: ItemEntity;
+  item: ItemEntity;
 
   @Column()
-  quantity!: number;
+  quantity: number;
 
   @CreateDateColumn()
-  created_at!: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updated_at!: Date;
+  updated_at: Date;
 }

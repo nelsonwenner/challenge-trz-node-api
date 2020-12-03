@@ -4,7 +4,7 @@ import tradeValidator from '../app/validators/tradeValidator';
 import router from './configRouter';
 
 export default [
-  router.put(
+  router.post(
     '/:senderId/trades/:targetId',
     tradeValidator,
     tradeMiddleware,
