@@ -34,7 +34,7 @@ export class InventoryRepository {
     yoursInventory: ResourceEntity[],
     type: string
   ): VerifyResource {
-    const res = inventoryAnalize.reduce(
+    const result = inventoryAnalize.reduce(
       (accumulator, item) => {
         const resource = yoursInventory.find(
           (resource) => resource.item.id === item.itemId
@@ -64,6 +64,6 @@ export class InventoryRepository {
       }
     );
 
-    return res;
+    return result;
   }
 }

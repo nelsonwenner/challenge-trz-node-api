@@ -1,9 +1,7 @@
 import { InventoryRepository } from '../repositories/InventoryRepository';
-import { SurvivorRepository } from '../repositories/SurvivorRepository';
 import { Request, Response, NextFunction } from 'express';
 import SurvivorEntity from '../models/Survivor';
 import AppError from '@src/utils/AppError';
-import * as Yup from 'yup';
 
 interface ItemDTO {
   itemId: string;
@@ -54,8 +52,6 @@ export default async (
   if (senderResource.points != targetResource.points) {
     throw new AppError(`Incompatible resource points`, 400);
   }
-
-  console.log('TEST => ', senderResource.points);
 
   return next();
 };
