@@ -51,5 +51,11 @@ export default async (
     );
   }
 
+  if (senderResource.points != targetResource.points) {
+    throw new AppError(`Incompatible resource points`, 400);
+  }
+
+  console.log('TEST => ', senderResource.points);
+
   return next();
 };

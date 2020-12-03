@@ -13,6 +13,7 @@ interface InventaryDTO extends Array<ItemDTO> {}
 interface VerifyResource {
   isValid: boolean;
   type: string;
+  points: number;
 }
 
 export class InventoryRepository {
@@ -50,11 +51,16 @@ export class InventoryRepository {
           accumulator.isValid = false;
         }
 
+        if (resource) {
+          accumulator.points += item.quantity * resource.item.value;
+        }
+
         return accumulator;
       },
       {
-        isValid: true,
         type: type,
+        isValid: true,
+        points: 0,
       }
     );
 
