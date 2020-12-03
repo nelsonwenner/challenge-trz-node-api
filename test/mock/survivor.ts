@@ -51,10 +51,10 @@ export const mockSurvivorModel = (flag = false): SurvivorModel => {
     sex: sex(),
     infected: flag,
     inventory: [
-      item(idCampbellSoup()),
-      item(idFirstAidPouch()),
-      item(idFijiWater()),
-      item(idAK47()),
+      item(idCampbellSoup(), 10),
+      item(idFirstAidPouch(), 15),
+      item(idFijiWater(), 20),
+      item(idAK47(), 15),
     ],
     location: {
       latitude: latitude(),

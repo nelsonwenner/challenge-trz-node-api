@@ -291,5 +291,35 @@ describe('Trade unitary test', () => {
         error: `Target: does not have the declared items quantity`,
       });
     });
+
+    test('Should return 400 if incompatible resource points', async () => {
+      const reqFake = {
+        sender: [
+          item(idCampbellSoup(), 5),
+          item(idFirstAidPouch(), 0),
+          item(idFijiWater(), 0),
+          item(idAK47(), 0),
+        ],
+        target: [
+          item(idCampbellSoup(), 2),
+          item(idFirstAidPouch(), 0),
+          item(idFijiWater(), 0),
+          item(idAK47(), 0),
+        ],
+      };
+
+      const sender = await createSurvivor();
+      const target = await createSurvivor();
+
+      const res = await global.testRequest
+        .post(`/${sender.id}/${prefix}/${target.id}`)
+        .send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: `Incompatible resource points`,
+      });
+    });
   });
 });
