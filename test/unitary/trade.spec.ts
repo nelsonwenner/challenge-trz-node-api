@@ -199,5 +199,37 @@ describe('Trade unitary test', () => {
         error: 'Survivor infected',
       });
     });
+
+    test('Should return 404 if Sender item does not exists', async () => {
+      const itemNotExists = uuid();
+
+      const reqFake = {
+        sender: [
+          item(itemNotExists),
+          item(idFirstAidPouch()),
+          item(idFijiWater()),
+          item(idAK47()),
+        ],
+        target: [
+          item(idCampbellSoup()),
+          item(idFirstAidPouch()),
+          item(idFijiWater()),
+          item(idAK47()),
+        ],
+      };
+
+      const sender = await createSurvivor();
+      const target = await createSurvivor();
+
+      const res = await global.testRequest
+        .post(`/${sender.id}/${prefix}/${target.id}`)
+        .send(reqFake);
+
+      expect(res.status).toBe(404);
+      expect(res.body).toEqual({
+        code: 404,
+        error: `Sender: item does not exists id: ${itemNotExists}`,
+      });
+    });
   });
 });
