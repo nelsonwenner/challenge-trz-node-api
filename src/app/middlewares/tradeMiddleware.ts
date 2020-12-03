@@ -47,7 +47,7 @@ export default async (
           ? senderResource.type
           : !targetResource.isValid && targetResource.type
       }: does not have the declared items quantity`,
-      404
+      400
     );
   }
 

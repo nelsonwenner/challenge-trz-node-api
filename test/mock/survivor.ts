@@ -40,8 +40,8 @@ export const latitude = (): number => parseInt(faker.address.latitude());
 export const longitude = (): number => parseInt(faker.address.longitude());
 export const numberRandom = (): number => random.int(10, 20);
 export const uuid = (): string => uuidv4();
-export const item = (id: string): ItemModel => {
-  return { itemId: id, quantity: random.int(10, 20) };
+export const item = (id: string, quantity = random.int(10, 20)): ItemModel => {
+  return { itemId: id, quantity: quantity };
 };
 
 export const mockSurvivorModel = (flag = false): SurvivorModel => {

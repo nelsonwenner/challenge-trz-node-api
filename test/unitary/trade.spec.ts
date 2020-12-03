@@ -231,5 +231,35 @@ describe('Trade unitary test', () => {
         error: `Sender: item does not exists id: ${itemNotExists}`,
       });
     });
+
+    test('Should return 400 if sender not have number of items', async () => {
+      const reqFake = {
+        sender: [
+          item(idCampbellSoup(), 10000),
+          item(idFirstAidPouch()),
+          item(idFijiWater()),
+          item(idAK47()),
+        ],
+        target: [
+          item(idCampbellSoup()),
+          item(idFirstAidPouch()),
+          item(idFijiWater()),
+          item(idAK47()),
+        ],
+      };
+
+      const sender = await createSurvivor();
+      const target = await createSurvivor();
+
+      const res = await global.testRequest
+        .post(`/${sender.id}/${prefix}/${target.id}`)
+        .send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: `Sender: does not have the declared items quantity`,
+      });
+    });
   });
 });
