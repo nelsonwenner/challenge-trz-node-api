@@ -236,15 +236,15 @@ describe('Trade unitary test', () => {
       const reqFake = {
         sender: [
           item(idCampbellSoup(), 10000),
-          item(idFirstAidPouch()),
-          item(idFijiWater()),
-          item(idAK47()),
+          item(idFirstAidPouch(), 0),
+          item(idFijiWater(), 0),
+          item(idAK47(), 0),
         ],
         target: [
-          item(idCampbellSoup()),
-          item(idFirstAidPouch()),
-          item(idFijiWater()),
-          item(idAK47()),
+          item(idCampbellSoup(), 0),
+          item(idFirstAidPouch(), 0),
+          item(idFijiWater(), 0),
+          item(idAK47(), 0),
         ],
       };
 
@@ -259,6 +259,36 @@ describe('Trade unitary test', () => {
       expect(res.body).toEqual({
         code: 400,
         error: `Sender: does not have the declared items quantity`,
+      });
+    });
+
+    test('Should return 400 if target not have number of items', async () => {
+      const reqFake = {
+        sender: [
+          item(idCampbellSoup(), 0),
+          item(idFirstAidPouch(), 0),
+          item(idFijiWater(), 0),
+          item(idAK47(), 0),
+        ],
+        target: [
+          item(idCampbellSoup(), 10000),
+          item(idFirstAidPouch(), 0),
+          item(idFijiWater(), 0),
+          item(idAK47(), 0),
+        ],
+      };
+
+      const sender = await createSurvivor();
+      const target = await createSurvivor();
+
+      const res = await global.testRequest
+        .post(`/${sender.id}/${prefix}/${target.id}`)
+        .send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: `Target: does not have the declared items quantity`,
       });
     });
   });

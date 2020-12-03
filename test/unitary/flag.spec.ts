@@ -133,8 +133,8 @@ describe('Flag unitary test', () => {
       const survivor = await SurvivorRepository.getSurvivor(target.id);
 
       expect(res.status).toBe(201);
-      expect(survivor.infected).toBe(true);
       expect(amountFlags).toBe(5);
+      expect(survivor.infected).toBe(true);
     });
   });
 });
