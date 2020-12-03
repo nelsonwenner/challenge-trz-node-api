@@ -1,6 +1,7 @@
 import InventoryEntity from '../models/Inventory';
 import SurvivorEntity from '../models/Survivor';
 import ResourceEntity from '../models/Resource';
+import AppError from '@src/utils/AppError';
 import { QueryRunner } from 'typeorm';
 
 interface ItemDTO {
@@ -8,6 +9,11 @@ interface ItemDTO {
   quantity: number;
 }
 interface InventaryDTO extends Array<ItemDTO> {}
+
+interface VerifyResource {
+  isValid: boolean;
+  type: string;
+}
 
 export class InventoryRepository {
   public static async create(
@@ -24,19 +30,34 @@ export class InventoryRepository {
 
   public static verifyResource(
     inventoryAnalize: InventaryDTO,
-    yoursInventory: ResourceEntity[]
-  ): boolean {
-    //console.log("TEST1 => ", inventoryAnalize)
-    //console.log("TEST2 => ", yoursInventory)
-    const isValid = inventoryAnalize.map((item) => {
-      return yoursInventory.find((resource) => {
-        //console.log(`\n${resource.id} - ${item.itemId} result: ${resource.id === item.itemId}\n`)
-        if (resource.id === item.itemId) {
-          //console.log(`\n${resource.id} - ${item.itemId} result: ${resource.id === item.itemId}\n`)
+    yoursInventory: ResourceEntity[],
+    type: string
+  ): VerifyResource {
+    const res = inventoryAnalize.reduce(
+      (accumulator, item) => {
+        const resource = yoursInventory.find(
+          (resource) => resource.item.id === item.itemId
+        );
+
+        if (!resource) {
+          throw new AppError(
+            `${type}: item does not exists id: ${item.itemId}`,
+            404
+          );
         }
-      });
-    });
-    //console.log(isValid)
-    return !isValid;
+
+        if (resource.quantity < item.quantity) {
+          accumulator.isValid = false;
+        }
+
+        return accumulator;
+      },
+      {
+        isValid: true,
+        type: type,
+      }
+    );
+
+    return res;
   }
 }

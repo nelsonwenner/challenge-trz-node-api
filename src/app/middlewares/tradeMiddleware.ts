@@ -28,18 +28,28 @@ export default async (
   const { senderSurvivor, targetSurvivor } = req.user as UserDTO;
   const { sender, target } = req.body as BodyDTO;
 
-  const isValid = InventoryRepository.verifyResource(
+  const senderResource = InventoryRepository.verifyResource(
     sender,
-    senderSurvivor.inventory.resource
+    senderSurvivor.inventory.resource,
+    'Sender'
   );
-  console.log(senderSurvivor.inventory.resource);
-  /*
-    senderSurvivor.inventory.resource.forEach(i => {
-      console.log(i.id);
-    })
-    */
 
-  //console.log("\nTEST => ", isValid);
+  const targetResource = InventoryRepository.verifyResource(
+    target,
+    targetSurvivor.inventory.resource,
+    'Target'
+  );
+
+  if (!senderResource.isValid || !targetResource.isValid) {
+    throw new AppError(
+      `${
+        !senderResource.isValid
+          ? senderResource.type
+          : !targetResource.isValid && targetResource.type
+      }: does not have the declared items quantity`,
+      404
+    );
+  }
 
   return next();
 };
