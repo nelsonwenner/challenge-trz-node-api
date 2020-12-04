@@ -30,27 +30,23 @@ export default class TradeController {
     await queryRunner.startTransaction();
 
     try {
-      await Promise.all([
-        await InventoryRepository.swap(
-          sender,
-          senderSurvivor.inventory.resource,
-          targetSurvivor.inventory.resource,
-          queryRunner
-        ),
-        await InventoryRepository.swap(
-          target,
-          targetSurvivor.inventory.resource,
-          senderSurvivor.inventory.resource,
-          queryRunner
-        ),
-      ]);
+      await InventoryRepository.swap(
+        sender,
+        senderSurvivor.inventory.resource,
+        targetSurvivor.inventory.resource,
+        queryRunner
+      );
+
+      await InventoryRepository.swap(
+        target,
+        targetSurvivor.inventory.resource,
+        senderSurvivor.inventory.resource,
+        queryRunner
+      );
 
       await queryRunner.commitTransaction();
 
-      return res.status(200).send({
-        sender: senderSurvivor.inventory.resource,
-        target: targetSurvivor.inventory.resource,
-      });
+      return res.status(200).json();
     } catch (error) {
       console.error(error);
       await queryRunner.rollbackTransaction();

@@ -79,17 +79,16 @@ export class InventoryRepository {
 
     baseInventory.forEach((data) => {
       inventorySender.find((sender) => {
-        if (sender.item.id === data.itemId) {
+        if (data.itemId === sender.item.id) {
           sender.quantity -= data.quantity;
+          instances.push(sender);
         }
-        inventoryTarget.find((target) => {
-          if (target.item.id === data.itemId) {
-            target.quantity += data.quantity;
-
-            instances.push(sender);
-            instances.push(target);
-          }
-        });
+      });
+      inventoryTarget.find((target) => {
+        if (data.itemId === target.item.id) {
+          target.quantity += data.quantity;
+          instances.push(target);
+        }
       });
     });
 
