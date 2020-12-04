@@ -66,4 +66,39 @@ export class InventoryRepository {
 
     return result;
   }
+
+  public static async swap(
+    baseInventory: InventaryDTO,
+    inventorySender: ResourceEntity[],
+    inventoryTarget: ResourceEntity[],
+    queryRunner: QueryRunner
+  ): Promise<ResourceEntity[]> {
+    const { connection } = queryRunner;
+
+    const instances: ResourceEntity[] = [];
+
+    baseInventory.forEach((data) => {
+      inventorySender.find((sender) => {
+        if (sender.item.id === data.itemId) {
+          sender.quantity -= data.quantity;
+        }
+        inventoryTarget.find((target) => {
+          if (target.item.id === data.itemId) {
+            target.quantity += data.quantity;
+
+            instances.push(sender);
+            instances.push(target);
+          }
+        });
+      });
+    });
+
+    const resourceRepository = connection.getRepository(ResourceEntity);
+
+    const resources = await Promise.all(
+      instances.map(async (resource) => await resourceRepository.save(resource))
+    );
+
+    return resources;
+  }
 }
