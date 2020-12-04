@@ -4,6 +4,23 @@ const prefix = '/locations';
 
 describe('Location unitary test', () => {
   describe('When update a location', () => {
+    test('Should return 400 if the latitude is greater than 90º', async () => {
+      const reqFake = {
+        latitude: 100.0,
+        longitude: longitude(),
+      };
+
+      const res = await global.testRequest
+        .put(`${prefix}/${uuid()}`)
+        .send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: ['latitude must be less than or equal to 90'],
+      });
+    });
+
     test('Should return 400 if latitude does not is provided', async () => {
       const reqFake = {
         longitude: longitude(),
