@@ -4,5 +4,6 @@ import router from './configRouter';
 
 export default [
   router.post('/survivors', survivorValidator, SurvivorController.create),
+  router.get('/survivors/:id', SurvivorController.show),
   router.get('/survivors', SurvivorController.index),
 ];

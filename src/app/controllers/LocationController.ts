@@ -15,6 +15,6 @@ export default class LocationController {
       survivor: req.user,
       ...data,
     });
-    return res.status(200).send({ ...location });
+    return res.status(200).json({ ...location });
   }
 }
