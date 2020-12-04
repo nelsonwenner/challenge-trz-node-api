@@ -522,5 +522,70 @@ describe('Trade unitary test', () => {
         findResourceQuantity(targetVerify.inventory.resource, idAK47())
       ).toBe(8);
     });
+
+    test('Should return 200 and make the switch. Sender: [5,0,0,5] Target: [5,0,0,5]', async () => {
+      const reqFake = {
+        sender: [
+          item(idFijiWater(), 5),
+          item(idCampbellSoup(), 0),
+          item(idFirstAidPouch(), 0),
+          item(idAK47(), 5),
+        ],
+        target: [
+          item(idFijiWater(), 5),
+          item(idCampbellSoup(), 0),
+          item(idFirstAidPouch(), 0),
+          item(idAK47(), 5),
+        ],
+      };
+
+      const sender = await createSurvivor();
+      const target = await createSurvivor();
+
+      const res = await global.testRequest
+        .post(`/${sender.id}/${prefix}/${target.id}`)
+        .send(reqFake);
+
+      const senderVerify = await SurvivorRepository.getSurvivor(sender.id);
+      const targetVerify = await SurvivorRepository.getSurvivor(target.id);
+
+      expect(res.status).toBe(200);
+
+      /**
+       * Trade: [5,0,0,5]
+       * Sender inventory before: [10, 10, 10, 10]
+       * Sender inventory after: [10, 10, 10, 10]
+       */
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idFijiWater())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idCampbellSoup())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idFirstAidPouch())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idAK47())
+      ).toBe(10);
+
+      /**
+       * Trade: [5,0,0,5]
+       * Target inventory before: [10, 10, 10, 10]
+       * Target inventory after: [10, 10, 10, 10]
+       */
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idFijiWater())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idCampbellSoup())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idFirstAidPouch())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idAK47())
+      ).toBe(10);
+    });
   });
 });
