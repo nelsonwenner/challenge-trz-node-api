@@ -1,3 +1,4 @@
+import { SurvivorRepository } from '@src/app/repositories/SurvivorRepository';
 import { FlagRepository } from '@src/app/repositories/FlagRepository';
 import { createSurvivor } from '../mock/survivor';
 
@@ -129,10 +130,11 @@ describe('Flag unitary test', () => {
 
       const res = await global.testRequest.post(prefix).send(reqFake);
       const amountFlags = await FlagRepository.countFlags(target);
+      const survivor = await SurvivorRepository.getSurvivor(target.id);
 
       expect(res.status).toBe(201);
-      expect(res.body.infected).toBe(true);
       expect(amountFlags).toBe(5);
+      expect(survivor.infected).toBe(true);
     });
   });
 });

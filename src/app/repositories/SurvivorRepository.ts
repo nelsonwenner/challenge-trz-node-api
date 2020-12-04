@@ -35,7 +35,28 @@ export class SurvivorRepository {
 
   public static async getSurvivor(id: string): Promise<SurvivorEntity> {
     const survivorRepository = getRepository(SurvivorEntity);
-    const survivor = await survivorRepository.findOne({ where: { id } });
+    const survivor = await survivorRepository.findOne({
+      where: { id },
+      relations: [
+        'inventory',
+        'inventory.resource',
+        'inventory.resource.item',
+        'location',
+      ],
+    });
+    return survivor;
+  }
+
+  public static async getAll(): Promise<SurvivorEntity[]> {
+    const survivorRepository = getRepository(SurvivorEntity);
+    const survivor = await survivorRepository.find({
+      relations: [
+        'inventory',
+        'inventory.resource',
+        'inventory.resource.item',
+        'location',
+      ],
+    });
     return survivor;
   }
 }

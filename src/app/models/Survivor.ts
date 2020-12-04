@@ -12,31 +12,31 @@ import LocationEntity from './Location';
 @Entity('survivors')
 export default class SurvivorEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id: string;
 
   @Column()
-  name!: string;
+  name: string;
 
   @Column({ default: false })
   infected!: boolean;
 
   @Column()
-  age!: number;
+  age: number;
 
   @Column()
-  sex!: string;
+  sex: string;
 
   @OneToOne(() => InventoryEntity, (inventory) => inventory.survivor)
-  inventory!: InventoryEntity;
+  inventory: InventoryEntity;
 
   @OneToOne(() => LocationEntity, (location) => location.survivor)
-  location!: LocationEntity;
+  location: LocationEntity;
 
   @CreateDateColumn()
-  created_at!: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updated_at!: Date;
+  updated_at: Date;
 }
 
 /**

@@ -12,23 +12,23 @@ import SurvivorEntity from './Survivor';
 @Entity('locations')
 export default class LocationEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id: string;
 
   @OneToOne(() => SurvivorEntity, (survivor) => survivor.location)
   @JoinColumn()
-  survivor!: SurvivorEntity;
+  survivor: SurvivorEntity;
 
   @Column()
-  latitude!: number;
+  latitude: number;
 
   @Column()
-  longitude!: number;
+  longitude: number;
 
   @CreateDateColumn()
-  created_at!: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updated_at!: Date;
+  updated_at: Date;
 }
 
 /**

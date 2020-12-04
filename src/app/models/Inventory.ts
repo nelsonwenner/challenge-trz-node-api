@@ -13,18 +13,18 @@ import ResourceEntity from './Resource';
 @Entity('inventories')
 export default class InventoryEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id: string;
 
-  @OneToOne(() => SurvivorEntity, (survivor) => survivor.location)
+  @OneToOne(() => SurvivorEntity, (survivor) => survivor.inventory)
   @JoinColumn()
-  survivor!: SurvivorEntity;
+  survivor: SurvivorEntity;
 
   @OneToMany(() => ResourceEntity, (resource) => resource.inventory)
-  resource!: ResourceEntity[];
+  resource: ResourceEntity[];
 
   @CreateDateColumn()
-  created_at!: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updated_at!: Date;
+  updated_at: Date;
 }

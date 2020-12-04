@@ -17,7 +17,7 @@ export default async (
       }).required()
     ).required(),
     location: Yup.object({
-      latitude: Yup.number().max(180).min(-180).required(),
+      latitude: Yup.number().max(90).min(-90).required(),
       longitude: Yup.number().max(180).min(-180).required(),
     }).required(),
   }).required();

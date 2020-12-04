@@ -11,19 +11,19 @@ import SurvivorEntity from './Survivor';
 @Entity('flags')
 export default class FlagEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id: string;
 
   @ManyToOne(() => SurvivorEntity)
   @JoinColumn()
-  sender!: SurvivorEntity;
+  sender: SurvivorEntity;
 
   @ManyToOne(() => SurvivorEntity)
   @JoinColumn()
-  target!: SurvivorEntity;
+  target: SurvivorEntity;
 
   @CreateDateColumn()
-  created_at!: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updated_at!: Date;
+  updated_at: Date;
 }
