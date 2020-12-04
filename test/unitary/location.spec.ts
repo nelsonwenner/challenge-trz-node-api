@@ -21,6 +21,23 @@ describe('Location unitary test', () => {
       });
     });
 
+    test('Should return 400 if the longitude is greater than 180º', async () => {
+      const reqFake = {
+        latitude: latitude(),
+        longitude: 190.0,
+      };
+
+      const res = await global.testRequest
+        .put(`${prefix}/${uuid()}`)
+        .send(reqFake);
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        code: 400,
+        error: ['longitude must be less than or equal to 180'],
+      });
+    });
+
     test('Should return 400 if latitude does not is provided', async () => {
       const reqFake = {
         longitude: longitude(),
