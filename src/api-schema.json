@@ -1,0 +1,173 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.3.0",
+    "title": "ZSSN Typescript Api",
+    "description": "API",
+    "termsOfService": "http://api_url/terms/",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333/",
+      "description": "Production Server"
+    },
+    {
+      "url": "http://localhost:3333/",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/survivors": {
+      "post": {
+        "description": "Create a new survivor",
+        "operationId": "createSurvivor",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Survivor"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The survivor has been created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SurvivorCreatedResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "400",
+                  "error": "Bad Request"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "500",
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "id":{
+        "type": "string",
+        "example": "722cb4b8-a46f-4e34-9d2d-284ebc6f39a",
+        "description": "this field is a uuid"
+      },
+      "name": {
+        "type": "string",
+        "example": "Wenner"
+      },
+      "age": {
+        "type": "number",
+        "example": 20
+      },
+      "sex": {
+        "type": "string",
+        "example": "Male"
+      },
+      "item": {
+        "type": "object",
+        "properties":{
+          "itemId": {
+            "$ref": "#/components/schemas/id"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 5
+          }
+        }
+      },
+      "inventory": {
+        "type": "array",
+        "properties": {
+          "item": {
+            "$ref": "#/components/schemas/item"
+          }
+        }
+      },
+      "location": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number"
+          },
+          "longitude": {
+            "type": "number"
+          }
+        }
+      },
+      "Survivor": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/name"
+          },
+          "age": {
+            "$ref": "#/components/schemas/age"
+          },
+          "sex": {
+            "$ref": "#/components/schemas/sex"
+          },
+          "inventory": {
+            "$ref": "#/components/schemas/inventory"
+          },
+          "location": {
+            "$ref": "#/components/schemas/location"
+          }
+        }
+      },
+      "SurvivorCreatedResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
