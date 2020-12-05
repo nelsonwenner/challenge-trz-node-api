@@ -9,14 +9,13 @@ export default async (
   next: NextFunction
 ): Promise<void> => {
   const schema = Yup.object({
-    survivorId: Yup.string().required(),
     latitude: Yup.number().max(90).min(-90).required(),
     longitude: Yup.number().max(180).min(-180).required(),
   }).required();
 
   await schema.validate(req.body, { abortEarly: false });
 
-  const survivor = await SurvivorRepository.getSurvivor(req.body.survivorId);
+  const survivor = await SurvivorRepository.getSurvivor(req.params.survivorId);
 
   if (!survivor) {
     throw new AppError('Survivor does not exists', 404);

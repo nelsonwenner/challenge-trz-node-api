@@ -69,4 +69,10 @@ export default class SurvivorController {
     const survivors = await SurvivorRepository.getAll();
     return res.status(200).json(survivors);
   }
+
+  public static async show(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const survivors = await SurvivorRepository.getSurvivor(id);
+    return res.status(200).json(survivors);
+  }
 }

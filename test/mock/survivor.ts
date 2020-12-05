@@ -2,6 +2,7 @@ import { InventoryRepository } from '@src/app/repositories/InventoryRepository';
 import { SurvivorRepository } from '@src/app/repositories/SurvivorRepository';
 import { LocationRepository } from '@src/app/repositories/LocationRepository';
 import { ResourceRepository } from '@src/app/repositories/ResourceRepository';
+import ResourceEntity from '@src/app/models/Resource';
 import SurvivorEntity from '@src/app/models/Survivor';
 import { getConnection } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
@@ -52,9 +53,9 @@ export const mockSurvivorModel = (flag = false): SurvivorModel => {
     infected: flag,
     inventory: [
       item(idCampbellSoup(), 10),
-      item(idFirstAidPouch(), 15),
-      item(idFijiWater(), 20),
-      item(idAK47(), 15),
+      item(idFirstAidPouch(), 10),
+      item(idFijiWater(), 10),
+      item(idAK47(), 10),
     ],
     location: {
       latitude: latitude(),
@@ -92,4 +93,12 @@ export const createSurvivor = async (flag = false): Promise<SurvivorEntity> => {
 
   await ResourceRepository.create(resources, queryRunner);
   return survivorData;
+};
+
+export const findResourceQuantity = (
+  resource: ResourceEntity[],
+  itemId: string
+): number => {
+  const res = resource.find((i) => i.item.id === itemId);
+  return res.quantity;
 };

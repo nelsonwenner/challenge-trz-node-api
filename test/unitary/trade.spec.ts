@@ -1,10 +1,16 @@
+import { SurvivorRepository } from './../../src/app/repositories/SurvivorRepository';
 import {
   idCampbellSoup,
   idFijiWater,
   idFirstAidPouch,
   idAK47,
 } from '../mock/items';
-import { item, uuid, createSurvivor } from '../mock/survivor';
+import {
+  item,
+  uuid,
+  createSurvivor,
+  findResourceQuantity,
+} from '../mock/survivor';
 
 const prefix = 'trades';
 
@@ -320,6 +326,266 @@ describe('Trade unitary test', () => {
         code: 400,
         error: `Incompatible resource points`,
       });
+    });
+
+    test('Should return 200 and make the switch. Sender: [1,0,0,1] Target: [0,1,1,0]', async () => {
+      const reqFake = {
+        sender: [
+          item(idFijiWater(), 1),
+          item(idCampbellSoup(), 0),
+          item(idFirstAidPouch(), 0),
+          item(idAK47(), 1),
+        ],
+        target: [
+          item(idFijiWater(), 0),
+          item(idCampbellSoup(), 1),
+          item(idFirstAidPouch(), 1),
+          item(idAK47(), 0),
+        ],
+      };
+
+      const sender = await createSurvivor();
+      const target = await createSurvivor();
+
+      const res = await global.testRequest
+        .post(`/${sender.id}/${prefix}/${target.id}`)
+        .send(reqFake);
+
+      const senderVerify = await SurvivorRepository.getSurvivor(sender.id);
+      const targetVerify = await SurvivorRepository.getSurvivor(target.id);
+
+      expect(res.status).toBe(200);
+
+      /**
+       * Trade: [1,0,0,1]
+       * Sender inventory before: [10, 10, 10, 10]
+       * Sender inventory after: [9, 11, 11, 9]
+       */
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idFijiWater())
+      ).toBe(9);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idCampbellSoup())
+      ).toBe(11);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idFirstAidPouch())
+      ).toBe(11);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idAK47())
+      ).toBe(9);
+
+      /**
+       * Trade: [0,1,1,0]
+       * Target inventory before: [10, 10, 10, 10]
+       * Target inventory after: [11, 9, 9, 11]
+       */
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idFijiWater())
+      ).toBe(11);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idCampbellSoup())
+      ).toBe(9);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idFirstAidPouch())
+      ).toBe(9);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idAK47())
+      ).toBe(11);
+    });
+
+    test('Should return 200 and make the switch. Sender: [5,0,5,0] Target: [0,6,0,6]', async () => {
+      const reqFake = {
+        sender: [
+          item(idFijiWater(), 5),
+          item(idCampbellSoup(), 0),
+          item(idFirstAidPouch(), 5),
+          item(idAK47(), 0),
+        ],
+        target: [
+          item(idFijiWater(), 0),
+          item(idCampbellSoup(), 6),
+          item(idFirstAidPouch(), 0),
+          item(idAK47(), 6),
+        ],
+      };
+
+      const sender = await createSurvivor();
+      const target = await createSurvivor();
+
+      const res = await global.testRequest
+        .post(`/${sender.id}/${prefix}/${target.id}`)
+        .send(reqFake);
+
+      const senderVerify = await SurvivorRepository.getSurvivor(sender.id);
+      const targetVerify = await SurvivorRepository.getSurvivor(target.id);
+
+      expect(res.status).toBe(200);
+
+      /**
+       * Trade: [5,0,5,0]
+       * Sender inventory before: [10, 10, 10, 10]
+       * Sender inventory after: [5, 16, 5, 16]
+       */
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idFijiWater())
+      ).toBe(5);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idCampbellSoup())
+      ).toBe(16);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idFirstAidPouch())
+      ).toBe(5);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idAK47())
+      ).toBe(16);
+
+      /**
+       * Trade: [0,6,0,6]
+       * Target inventory before: [10, 10, 10, 10]
+       * Target inventory after: [15, 4, 15, 4]
+       */
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idFijiWater())
+      ).toBe(15);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idCampbellSoup())
+      ).toBe(4);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idFirstAidPouch())
+      ).toBe(15);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idAK47())
+      ).toBe(4);
+    });
+
+    test('Should return 200 and make the switch. Sender: [0,0,4,0] Target: [0,2,0,2]', async () => {
+      const reqFake = {
+        sender: [
+          item(idFijiWater(), 0),
+          item(idCampbellSoup(), 0),
+          item(idFirstAidPouch(), 4),
+          item(idAK47(), 0),
+        ],
+        target: [
+          item(idFijiWater(), 0),
+          item(idCampbellSoup(), 2),
+          item(idFirstAidPouch(), 0),
+          item(idAK47(), 2),
+        ],
+      };
+
+      const sender = await createSurvivor();
+      const target = await createSurvivor();
+
+      const res = await global.testRequest
+        .post(`/${sender.id}/${prefix}/${target.id}`)
+        .send(reqFake);
+
+      const senderVerify = await SurvivorRepository.getSurvivor(sender.id);
+      const targetVerify = await SurvivorRepository.getSurvivor(target.id);
+
+      expect(res.status).toBe(200);
+
+      /**
+       * Trade: [0,0,4,0]
+       * Sender inventory before: [10, 10, 10, 10]
+       * Sender inventory after: [10, 12, 6, 12]
+       */
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idFijiWater())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idCampbellSoup())
+      ).toBe(12);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idFirstAidPouch())
+      ).toBe(6);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idAK47())
+      ).toBe(12);
+
+      /**
+       * Trade: [0,2,0,2]
+       * Target inventory before: [10, 10, 10, 10]
+       * Target inventory after: [10, 8, 14, 8]
+       */
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idFijiWater())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idCampbellSoup())
+      ).toBe(8);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idFirstAidPouch())
+      ).toBe(14);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idAK47())
+      ).toBe(8);
+    });
+
+    test('Should return 200 and make the switch. Sender: [5,0,0,5] Target: [5,0,0,5]', async () => {
+      const reqFake = {
+        sender: [
+          item(idFijiWater(), 5),
+          item(idCampbellSoup(), 0),
+          item(idFirstAidPouch(), 0),
+          item(idAK47(), 5),
+        ],
+        target: [
+          item(idFijiWater(), 5),
+          item(idCampbellSoup(), 0),
+          item(idFirstAidPouch(), 0),
+          item(idAK47(), 5),
+        ],
+      };
+
+      const sender = await createSurvivor();
+      const target = await createSurvivor();
+
+      const res = await global.testRequest
+        .post(`/${sender.id}/${prefix}/${target.id}`)
+        .send(reqFake);
+
+      const senderVerify = await SurvivorRepository.getSurvivor(sender.id);
+      const targetVerify = await SurvivorRepository.getSurvivor(target.id);
+
+      expect(res.status).toBe(200);
+
+      /**
+       * Trade: [5,0,0,5]
+       * Sender inventory before: [10, 10, 10, 10]
+       * Sender inventory after: [10, 10, 10, 10]
+       */
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idFijiWater())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idCampbellSoup())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idFirstAidPouch())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(senderVerify.inventory.resource, idAK47())
+      ).toBe(10);
+
+      /**
+       * Trade: [5,0,0,5]
+       * Target inventory before: [10, 10, 10, 10]
+       * Target inventory after: [10, 10, 10, 10]
+       */
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idFijiWater())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idCampbellSoup())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idFirstAidPouch())
+      ).toBe(10);
+      expect(
+        findResourceQuantity(targetVerify.inventory.resource, idAK47())
+      ).toBe(10);
     });
   });
 });

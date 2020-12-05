@@ -3,5 +3,9 @@ import locationValidator from '../app/validators/locationValidator';
 import router from './configRouter';
 
 export default [
-  router.put('/locations', locationValidator, LocationController.update),
+  router.put(
+    '/locations/:survivorId',
+    locationValidator,
+    LocationController.update
+  ),
 ];
