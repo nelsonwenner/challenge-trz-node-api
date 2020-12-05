@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "NODE_ENV=production LOGGER_ENABLE=1 npm run build && node dist/src/index.js",
-    "dev": "NODE_ENV=development LOGGER_ENABLE=0 ts-node-dev --transpile-only --ignore-watch node_modules src/index.ts",
+    "dev": "NODE_ENV=development LOGGER_ENABLE=1 ts-node-dev --transpile-only --ignore-watch node_modules src/index.ts",
     "lint:check": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
     "style:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
