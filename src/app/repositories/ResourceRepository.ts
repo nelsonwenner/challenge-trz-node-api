@@ -21,9 +21,10 @@ export class ResourceRepository {
     return resource;
   }
 
-  public static async sum(): Promise<ItemsDTO> {
+  public static async sum(isInfected: boolean): Promise<ItemsDTO> {
     const survivorRepository = getRepository(SurvivorEntity);
     const survivor = await survivorRepository.find({
+      where: { infected: isInfected },
       relations: [
         'inventory',
         'inventory.resource',

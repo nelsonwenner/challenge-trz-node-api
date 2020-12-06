@@ -4,7 +4,7 @@ import router from './configRouter';
 
 export default [
   router.put(
-    '/locations/:survivorId',
+    '/survivors/:survivorId/locations',
     locationValidator,
     LocationController.update
   ),

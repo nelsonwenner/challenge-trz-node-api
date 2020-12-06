@@ -1,6 +1,6 @@
 import { latitude, longitude, createSurvivor, uuid } from '../mock/survivor';
 
-const prefix = '/locations';
+const prefix = 'locations';
 
 describe('Location unitary test', () => {
   describe('When update a location', () => {
@@ -11,7 +11,7 @@ describe('Location unitary test', () => {
       };
 
       const res = await global.testRequest
-        .put(`${prefix}/${uuid()}`)
+        .put(`/survivors/${uuid()}/${prefix}`)
         .send(reqFake);
 
       expect(res.status).toBe(400);
@@ -28,7 +28,7 @@ describe('Location unitary test', () => {
       };
 
       const res = await global.testRequest
-        .put(`${prefix}/${uuid()}`)
+        .put(`/survivors/${uuid()}/${prefix}`)
         .send(reqFake);
 
       expect(res.status).toBe(400);
@@ -44,7 +44,7 @@ describe('Location unitary test', () => {
       };
 
       const res = await global.testRequest
-        .put(`${prefix}/${uuid()}`)
+        .put(`/survivors/${uuid()}/${prefix}`)
         .send(reqFake);
 
       expect(res.status).toBe(400);
@@ -60,7 +60,7 @@ describe('Location unitary test', () => {
       };
 
       const res = await global.testRequest
-        .put(`${prefix}/${uuid()}`)
+        .put(`/survivors/${uuid()}/${prefix}`)
         .send(reqFake);
 
       expect(res.status).toBe(400);
@@ -77,7 +77,7 @@ describe('Location unitary test', () => {
       };
 
       const res = await global.testRequest
-        .put(`${prefix}/${uuid()}`)
+        .put(`/survivors/${uuid()}/${prefix}`)
         .send(reqFake);
 
       expect(res.status).toBe(404);
@@ -96,7 +96,7 @@ describe('Location unitary test', () => {
       };
 
       const res = await global.testRequest
-        .put(`${prefix}/${survivor.id}`)
+        .put(`/survivors/${survivor.id}/${prefix}`)
         .send(reqFake);
 
       expect(res.status).toBe(200);
