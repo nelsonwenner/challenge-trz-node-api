@@ -56,7 +56,7 @@ $ npm run test:coverage
 
 ## :spiral_notepad: Swagger
 
-To access the API documentation, with the server running, access [http://localhost:3333/docs](http://localhost:3333/docs)
+With the server running, access [http://localhost:3333/docs](http://localhost:3333/docs)
 
 ## :memo: License
 This project is under the MIT license. See the [LICENSE](LICENSE.md) for more information.
