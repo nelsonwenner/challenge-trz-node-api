@@ -3,6 +3,7 @@ import SurvivorEntity from '../models/Survivor';
 import { Request, Response } from 'express';
 import AppError from '@src/utils/AppError';
 import { getConnection } from 'typeorm';
+import logger from '@src/logger';
 
 interface ItemDTO {
   itemId: string;
@@ -48,7 +49,7 @@ export default class TradeController {
 
       return res.status(200).json();
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       await queryRunner.rollbackTransaction();
       throw new AppError('Internal server error.', 500);
     } finally {

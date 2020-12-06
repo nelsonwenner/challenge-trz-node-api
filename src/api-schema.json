@@ -1,0 +1,837 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.3.0",
+    "title": "ZSSN Typescript Api",
+    "description": "API",
+    "termsOfService": "http://api_url/terms/",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333/",
+      "description": "Production Server"
+    },
+    {
+      "url": "http://localhost:3333/",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/survivors": {
+      "post": {
+        "tags": [
+          "Survivors"
+        ],
+        "description": "Create a new survivor",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Survivor"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The survivor has been created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SurvivorCreatedResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "400",
+                  "error": "Bad Request"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "500",
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Survivors"
+        ],
+        "responses": {
+          "200": {
+            "description": "List all survivors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/SurvivorListResponse"  
+                      },
+                      {
+                        "$ref": "#/components/schemas/SurvivorListResponse"  
+                      },
+                      {
+                        "$ref": "#/components/schemas/SurvivorListResponse"  
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "500",
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/survivors/{survivorId}": {
+      "get": {
+        "tags": [
+          "Survivors"
+        ],
+        "description": "Show survivor",
+         "parameters": [
+          {
+            "name": "survivorId",
+            "in": "path",
+            "description": "UUID of survivor",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Show survivor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SurvivorListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Survivor does not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "404",
+                  "error": "Survivor does not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "500",
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/survivors/{survivorId}/locations": {
+      "put": {
+        "tags": [
+          "Survivors"
+        ],
+        "description": "Update locations survivor",
+        "parameters": [
+          {
+            "name": "survivorId",
+            "in": "path",
+            "description": "UUID of survivor",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Location"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The survivor has been created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Location"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "400",
+                  "error": "Bad Request"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "500",
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flags": {
+      "post": {
+        "tags": [
+          "Flags"
+        ],
+        "description": "Flagger survivor",
+         "parameters": [],
+         "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Flag"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Show survivor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SurvivorListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Survivor does not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "404",
+                  "error": "Survivor does not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "500",
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{senderId}/trades/{targetId}": {
+      "post": {
+        "tags": [
+          "Trades"
+        ],
+        "description": "Trade",
+         "parameters": [
+             {
+                "name": "senderId",
+                "in": "path",
+                "description": "UUID of survivor",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+            },
+            {
+              "name": "targetId",
+              "in": "path",
+              "description": "UUID of survivor",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+         "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Trade"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Show survivor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SurvivorListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Survivor does not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "404",
+                  "error": "Survivor does not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "500",
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+     "/items": {
+      "get": {
+        "tags": [
+          "Items"
+        ],
+        "description": "Items",
+         "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Show survivor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "500",
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "id": {
+        "type": "string",
+        "format": "uuid",
+        "description": "this field is a uuid",
+        "example": "722cb4b8-a46f-4e34-9d2d-284ebc6f39a"
+      },
+      "name": {
+        "type": "string",
+        "example": "Wenner"
+      },
+      "age": {
+        "type": "number",
+        "example": 20
+      },
+      "sex": {
+        "type": "string",
+        "example": "Male"
+      },
+      "Location": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "example": 90
+          },
+          "longitude": {
+            "type": "number",
+            "example": -180
+          }
+        }
+      },
+      "itemFijiWater": {
+        "type": "object",
+        "description": "Fiji Water",
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "example": "e1182700-d1b0-4585-99bf-6510497602ab"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          }
+        }
+      },
+      "itemCampbellSoup": {
+        "type": "object",
+        "description": "Campbell Soup",
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "example": "e2056800-d7b2-4241-88bf-3211757351ab"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          }
+        }
+      },
+      "itemFirstAidPouch": {
+        "type": "object",
+        "description": "First Aid Pouch",
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "example": "e3045700-d1b1-3341-78bf-5111269121ab"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          }
+        }
+      },
+      "itemAK47": {
+        "type": "object",
+        "description": "AK47",
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "example": "e4024300-d7b7-1253-60bf-6212457358ab"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          }
+        }
+      },
+      "Survivor": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/name"
+          },
+          "age": {
+            "$ref": "#/components/schemas/age"
+          },
+          "sex": {
+            "$ref": "#/components/schemas/sex"
+          },
+          "inventory": {
+            "type": "array",
+            "minItems": 4,
+            "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/itemFijiWater"
+                },
+                {
+                  "$ref": "#/components/schemas/itemCampbellSoup"
+                },
+                {
+                  "$ref": "#/components/schemas/itemFirstAidPouch"
+                },
+                {
+                  "$ref": "#/components/schemas/itemAK47"
+                }
+              ]
+            }
+          },
+          "location": {
+            "$ref": "#/components/schemas/Location"
+          }
+        }
+      },
+      "SurvivorCreatedResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          }
+        }
+      },
+      "FijiWater": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "e1182700-d1b0-4585-99bf-6510497602ab"
+          },
+          "name": {
+            "type": "string",
+            "example": "Fiji Water"
+          },
+          "value": {
+            "type": "number",
+            "example": 14
+          }
+        }
+      },
+      "resourceFijiWater": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          },
+          "item": {
+            "$ref": "#/components/schemas/FijiWater"
+          }
+        }
+      },
+      "CampbellSoup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "e2056800-d7b2-4241-88bf-3211757351ab"
+          },
+          "name": {
+            "type": "string",
+            "example": "Campbell Soup"
+          },
+          "value": {
+            "type": "number",
+            "example": 12
+          }
+        }
+      },
+      "resourceCampbellSoup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          },
+          "item": {
+            "$ref": "#/components/schemas/CampbellSoup"
+          }
+        }
+      },
+      "FirstAidPouch": {
+       "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "e3045700-d1b1-3341-78bf-5111269121ab"
+          },
+          "name": {
+            "type": "string",
+            "example": "First Aid Pouch"
+          },
+          "value": {
+            "type": "number",
+            "example": 10
+          }
+        }
+      },
+      "resourceFirstAidPouch": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          },
+          "item": {
+            "$ref": "#/components/schemas/FirstAidPouch"
+          }
+        }
+      },
+      "AK47": {
+       "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "e4024300-d7b7-1253-60bf-6212457358ab"
+          },
+          "name": {
+            "type": "string",
+            "example": "AK47"
+          },
+          "value": {
+            "type": "number",
+            "example": 8
+          }
+        }
+      },
+      "resourceAK47": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 10
+          },
+          "item": {
+            "$ref": "#/components/schemas/AK47"
+          }
+        }
+      },
+      "SurvivorListResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "name": {
+            "$ref": "#/components/schemas/name"
+          },
+          "age": {
+            "$ref": "#/components/schemas/age"
+          },
+          "sex": {
+            "$ref": "#/components/schemas/sex"
+          },
+          "inventory": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/id"
+              },
+              "resource": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/resourceFijiWater"
+                    },
+                    {
+                      "$ref": "#/components/schemas/resourceCampbellSoup"
+                    },
+                    {
+                      "$ref": "#/components/schemas/resourceFirstAidPouch"
+                    },
+                    {
+                      "$ref": "#/components/schemas/resourceAK47"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "location": {
+             "$ref": "#/components/schemas/Location"
+          }
+        }
+      },
+      "Flag": {
+        "type": "object",
+        "properties": {
+          "senderId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "e4024300-d7b7-1253-60bf-6212457358ab"
+          },
+          "targetId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "e4024300-d7b7-1253-60bf-6212457358ab"
+          }
+        }
+      },
+      "Trade": {
+        "type": "object",
+        "properties": {
+          "sender": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/itemFijiWater"
+                },
+                {
+                  "$ref": "#/components/schemas/itemCampbellSoup"
+                },
+                {
+                  "$ref": "#/components/schemas/itemFirstAidPouch"
+                },
+                {
+                  "$ref": "#/components/schemas/itemAK47"
+                }
+              ]
+            }
+          },
+          "target": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/itemFijiWater"
+                },
+                {
+                  "$ref": "#/components/schemas/itemCampbellSoup"
+                },
+                {
+                  "$ref": "#/components/schemas/itemFirstAidPouch"
+                },
+                {
+                  "$ref": "#/components/schemas/itemAK47"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "ItemListResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "oneOf": [
+            {
+              "$ref": "#/components/schemas/FijiWater"
+            },
+            {
+              "$ref": "#/components/schemas/CampbellSoup"
+            },
+            {
+              "$ref": "#/components/schemas/FirstAidPouch"
+            },
+            {
+              "$ref": "#/components/schemas/AK47"
+            }
+          ]
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

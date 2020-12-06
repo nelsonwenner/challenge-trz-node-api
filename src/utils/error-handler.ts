@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ErrorRequestHandler } from 'express';
 import { ValidationError } from 'yup';
 import AppError from './AppError';
+import logger from '../logger';
 
 const errorHandler: ErrorRequestHandler = (
   err: Error,
@@ -33,7 +34,7 @@ const errorHandler: ErrorRequestHandler = (
     });
   }
 
-  console.error(err);
+  logger.error(err);
 
   return res.status(500).json({
     code: 500,

@@ -4,6 +4,7 @@ import SurvivorEntity from '../models/Survivor';
 import { Request, Response } from 'express';
 import AppError from '@src/utils/AppError';
 import { getConnection } from 'typeorm';
+import logger from '@src/logger';
 
 interface UserDTO {
   sender: SurvivorEntity;
@@ -24,7 +25,7 @@ export default class FlagController {
 
       const amountFlagsTarget = await FlagRepository.countFlags(target);
 
-      if (amountFlagsTarget === 5) {
+      if (amountFlagsTarget >= 5) {
         target = await SurvivorRepository.infect(target, queryRunner);
       }
 
@@ -32,7 +33,7 @@ export default class FlagController {
 
       return res.status(201).send({ ...target });
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       await queryRunner.rollbackTransaction();
       throw new AppError('Internal server error.', 500);
     } finally {

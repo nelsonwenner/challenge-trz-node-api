@@ -5,6 +5,7 @@ import { ResourceRepository } from '../repositories/ResourceRepository';
 import { Request, Response } from 'express';
 import AppError from '@src/utils/AppError';
 import { getConnection } from 'typeorm';
+import logger from '@src/logger';
 
 interface ItemDTO {
   itemId: string;
@@ -57,7 +58,7 @@ export default class SurvivorController {
 
       return res.status(201).json({ id: survivorData.id });
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       await queryRunner.rollbackTransaction();
       throw new AppError(error.message, 400);
     } finally {

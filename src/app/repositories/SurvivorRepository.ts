@@ -59,4 +59,14 @@ export class SurvivorRepository {
     });
     return survivor;
   }
+
+  public static async infectedOrNotInfected(
+    isInfected: boolean
+  ): Promise<number> {
+    const survivorRepository = getRepository(SurvivorEntity);
+    const amount = await survivorRepository.count({
+      where: { infected: isInfected },
+    });
+    return amount;
+  }
 }
