@@ -14,6 +14,12 @@
   </a>
 </p>
 
+## :telescope: Diagram Database
+
+<p align="center">
+  <img alt="diagram" src="./diagram/zssn.png" />
+</p>
+
 ## :rocket: Technologies
 
 * [Typescript](https://www.typescriptlang.org/)
