@@ -1,7 +1,7 @@
-<h1 align="center">ZSSN - API</h1>
+<h1 align="center">TRZ (The resident zombie) - API</h1>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsonwenner/zssn-api?color=%2304D361">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/nelsonwenner/trz-api?color=%2304D361">
 
   <a href="https://github.com/nelsonwenner">
     <img alt="Made by @nelsonwenner" src="https://img.shields.io/badge/made%20by-%40nelsonwenner-%2304D361">
@@ -10,7 +10,7 @@
   <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
 
   <a href="https://github.com/nelsonwenner/ecoleta/stargazers">
-    <img alt="Stargazers" src="https://img.shields.io/github/stars/nelsonwenner/zssn-api?style=social">
+    <img alt="Stargazers" src="https://img.shields.io/github/stars/nelsonwenner/trz-api?style=social">
   </a>
 </p>
 
@@ -37,7 +37,7 @@
 ## :information_source: Getting Started
 
 1. Fork this repository and clone it on your machine.
-2. Change the directory to `zssn-api` where you cloned it.
+2. Change the directory to `trz-api` where you cloned it.
 
 ## :closed_lock_with_key: Backend Getting Started 
 
